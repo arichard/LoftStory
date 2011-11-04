@@ -8,6 +8,7 @@ public class Erratique extends Neuneu {
 		this.setId(0);
 		this.setEnergie(1);
 		this.setPresenceLoft(true);
+		//manque CaseLoft
 	}
 	
 	/**

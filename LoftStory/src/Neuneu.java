@@ -6,6 +6,7 @@ public abstract class Neuneu {
 	 */
 	protected int id, energie;
 	protected boolean presenceLoft;
+	protected CaseLoft coord;
 
 	/**
 	 * Getters and setters
@@ -34,6 +35,20 @@ public abstract class Neuneu {
 	public void setPresenceLoft(boolean presenceLoft) {
 		this.presenceLoft = presenceLoft;
 	}
+	
+	/**
+	 * Pour récupérer la position X du Neuneu
+	 */
+	//public int getCoordX() {
+	//	
+	//}
+	
+	/**
+	 * Pour récupérer la position Y du Neuneu
+	 */
+	//public int getCoordY() {
+	//	
+	//}
 
 	/**
 	 * Pour l'action de déplacement des Neuneus
