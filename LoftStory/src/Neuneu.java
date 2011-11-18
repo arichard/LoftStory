@@ -88,17 +88,28 @@ public abstract class Neuneu implements ObjetDessinable {
 	}
 
 	/**
-	 * Pour l'action de déplacement des Neuneus
+	 * Pour l'action de déplacement aléatoire des Neuneus
 	 */
 	protected void seDeplacer() {
-
+		// on choisit aléatoirement la case adjacente sur laquelle va aller le Neuneu
+		int mini = 1, maxi = this.getCoord().casesAdj().size()+1;
+		int random = (int)(Math.random() * (maxi-mini)) + mini;
+		
+		// on va définir les nouvelles coordonnées du Neuneu
+		// en récupérant les coordonnées de la case choisie aléatoirement
+		int i=0;
+		do{
+			i++;
+		}while(i<random);
+		this.setCoord(this.getCoord().casesAdj().get(i).getX(), this.getCoord().casesAdj().get(i).getY());
 	}
 
 	/**
 	 * Pour l'action de manger des Neuneus
 	 */
 	protected void manger() {
-
+		//enlever l'énergie de la nourriture mangée
+		//enlever la nourriture de la liste presencenNourriture si sa QtéEnergie est nulle
 	}
 
 	/**

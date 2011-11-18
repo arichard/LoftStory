@@ -96,49 +96,66 @@ public class CaseLoft {
 	}
 
 	public LinkedList<CaseLoft> casesAdj() {
-		CaseLoft B = new CaseLoft();
-		B.setX(this.getX() - 1);
-		B.setY(this.getY() - 1);
+		
+		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
+		
+		// -1 ; -1
+		int bX=this.getX()-1, bY=this.getY()-1;
+		if((bX>=0 && bX<this.loft1.getW()) && (bY>=0 && bY<this.loft1.getH())){
+			CaseLoft B = this.loft1.getMaison()[bX][bY];
+			listeCasesAdj.add(B);
+		}
+		
+		// -1 ; -0
+		int cX=this.getX()-1, cY=this.getY();
+		if((cX>=0 && cX<this.loft1.getW()) && (cY>=0 && cY<this.loft1.getH())){
+			CaseLoft C = this.loft1.getMaison()[cX][cY];
+			listeCasesAdj.add(C);
+		}
+		
+		// -1 ; +1
+		int dX=this.getX()-1, dY=this.getY()+1;
+		if((dX>=0 && dX<this.loft1.getW()) && (dY>=0 && dY<this.loft1.getH())){
+			CaseLoft D = this.loft1.getMaison()[dX][dY];
+			listeCasesAdj.add(D);
+		}
+		
+		// 0 ; +1
+		int eX=this.getX(), eY=this.getY()+1;
+		if((eX>=0 && eX<this.loft1.getW()) && (eY>=0 && eY<this.loft1.getH())){
+			CaseLoft E = this.loft1.getMaison()[eX][eY];
+			listeCasesAdj.add(E);
+		}
+		
+		// +1 ; +1
+		int fX=this.getX()+1, fY=this.getY()+1;
+		if((fX>=0 && fX<this.loft1.getW()) && (fY>=0 && fY<this.loft1.getH())){
+			CaseLoft F = this.loft1.getMaison()[fX][fY];
+			listeCasesAdj.add(F);
+		}
+		
+		// +1 ; 0
+		int gX=this.getX()+1, gY=this.getY();
+		if((gX>=0 && gX<this.loft1.getW()) && (gY>=0 && gY<this.loft1.getH())){
+			CaseLoft G = this.loft1.getMaison()[gX][gY];
+			listeCasesAdj.add(G);
+		}
+		
+		// +1 ; -1
+		int hX=this.getX()+1, hY=this.getY()-1;
+		if((hX>=0 && hX<this.loft1.getW()) && (hY>=0 && hY<this.loft1.getH())){
+			CaseLoft H = this.loft1.getMaison()[hX][hY];
+			listeCasesAdj.add(H);
+		}
+		
+		// 0 ; -1
+		int iX=this.getX(), iY=this.getY()-1;
+		if((iX>=0 && iX<this.loft1.getW()) && (iY>=0 && iY<this.loft1.getH())){
+			CaseLoft I = this.loft1.getMaison()[iX][iY];
+			listeCasesAdj.add(I);
+		}
 
-		CaseLoft C = new CaseLoft();
-		C.setX(this.getX() - 1);
-		C.setY(this.getY());
-
-		CaseLoft D = new CaseLoft();
-		D.setX(this.getX() - 1);
-		D.setY(this.getY() + 1);
-
-		CaseLoft E = new CaseLoft();
-		E.setX(this.getX());
-		E.setY(this.getY() + 1);
-
-		CaseLoft F = new CaseLoft();
-		F.setX(this.getX() + 1);
-		F.setY(this.getY() + 1);
-
-		CaseLoft G = new CaseLoft();
-		G.setX(this.getX() + 1);
-		G.setY(this.getY());
-
-		CaseLoft H = new CaseLoft();
-		H.setX(this.getX() + 1);
-		H.setY(this.getY() - 1);
-
-		CaseLoft I = new CaseLoft();
-		I.setX(this.getX());
-		I.setY(this.getY() - 1);
-
-		LinkedList<CaseLoft> J = new LinkedList<CaseLoft>();
-		J.add(B);
-		J.add(C);
-		J.add(D);
-		J.add(E);
-		J.add(F);
-		J.add(G);
-		J.add(H);
-		J.add(I);
-
-		return J;
+		return listeCasesAdj;
 
 	}
 }
