@@ -57,7 +57,7 @@ public class Erratique extends Neuneu {
 			if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
 					&& aMange == false) {
 				// le Neuneu mange
-				this.manger();
+				this.manger(listeCasesAdj.get(i));
 				aMange = true;
 				// le Neuneu se dŽplace sur la case sur laquelle il vient de
 				// manger

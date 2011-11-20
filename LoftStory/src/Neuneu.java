@@ -107,7 +107,7 @@ public abstract class Neuneu implements ObjetDessinable {
 	/**
 	 * Pour l'action de manger des Neuneus
 	 */
-	protected void manger() {
+	protected void manger(CaseLoft C) {
 		//enlever l'nergie de la nourriture mange
 		//enlever la nourriture de la liste presencenNourriture si sa QtEnergie est nulle
 	}
