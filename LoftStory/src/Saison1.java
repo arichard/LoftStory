@@ -31,7 +31,6 @@ public class Saison1 {
 		int nombreLapin=(int)(nombreLofteurs*proportionLapin);
 		
 		Loft loft1=new Loft(lLoft,hLoft);
-		System.out.println("Test - coordonnée X : " + loft1.getMaison()[2][2].getX());
 		CaseLoft X = new CaseLoft (-1,-1, loft1);
 		
 		// 

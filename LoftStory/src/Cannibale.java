@@ -144,7 +144,7 @@ public class Cannibale extends Neuneu {
 			}
 			// sinon sur les cases adjacentes
 			int k = 0;
-			while (k <= listeCasesAdj.size() || aReprodui == false) {
+			while (k < listeCasesAdj.size() || aReprodui == false) {
 				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 						&& aReprodui == false) {
 					// le Neuneu se reproduit

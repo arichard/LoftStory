@@ -9,8 +9,8 @@ public class CaseLoft {
 	protected Loft loft1;
 
 	public CaseLoft() {
-		this.setPopulationCase(new LinkedList<Neuneu>());
-		this.setPresenceNourriture(new LinkedList<Nourriture>());
+		this.populationCase = new LinkedList<Neuneu>();
+		this.presenceNourriture = new LinkedList<Nourriture>();
 		this.x = 0;
 		this.y = 0;
 		this.loft1 = new Loft();
@@ -28,8 +28,8 @@ public class CaseLoft {
 
 	public CaseLoft(int x, int y, Loft loft1) {
 
-		this.setPopulationCase(new LinkedList<Neuneu>());
-		this.setPresenceNourriture(new LinkedList<Nourriture>());
+		this.populationCase = new LinkedList<Neuneu>();
+		this.presenceNourriture = new LinkedList<Nourriture>();
 		this.x = x;
 		this.y = y;
 		this.loft1 = loft1;
@@ -86,14 +86,20 @@ public class CaseLoft {
 	}
 
 	public void ajouterNeuneu(Neuneu N) {
+		// on ajoute le Neuneu à la liste des Neuneus sur la case
 		populationCase.add(N);
+		// on met son attribut presenceLoft comme vrai
 		N.setPresenceLoft(true);
+		// on met à jour ses coordonnées
+		N.setCoord(this.getX(), this.getY());
 
 	}
 
 	public void retirerNeuneu(Neuneu N) {
 		populationCase.remove(N);
 		N.setPresenceLoft(false);
+		// on met à jour les coordonnées du Neuneu
+		N.setCoord(-1, -1);
 
 	}
 

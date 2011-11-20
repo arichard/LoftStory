@@ -59,7 +59,7 @@ public class Erratique extends Neuneu {
 		int i = 0;
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
-		while (i <= listeCasesAdj.size() || aMange == false) {
+		while (i < listeCasesAdj.size() || aMange == false) {
 
 			if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
 					&& aMange == false) {
@@ -84,7 +84,7 @@ public class Erratique extends Neuneu {
 			}
 			// sinon sur les cases adjacentes
 			int k = 0;
-			while (k <= listeCasesAdj.size() || aReprodui == false) {
+			while (k < listeCasesAdj.size() || aReprodui == false) {
 				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 						&& aReprodui == false) {
 					// le Neuneu se reproduit

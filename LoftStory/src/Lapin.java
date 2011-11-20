@@ -57,7 +57,7 @@ public class Lapin extends Neuneu {
 		int k = 0;
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
-		while (k <= listeCasesAdj.size() || aReprodui == false) {
+		while (k < listeCasesAdj.size() || aReprodui == false) {
 			if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 					&& aReprodui == false) {
 				// le Neuneu se reproduit
@@ -83,7 +83,7 @@ public class Lapin extends Neuneu {
 
 			// sinon sur les cases adjacentes
 			int i = 0;
-			while (i <= listeCasesAdj.size() || aMange == false) {
+			while (i < listeCasesAdj.size() || aMange == false) {
 
 				if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
 						&& aMange == false) {
