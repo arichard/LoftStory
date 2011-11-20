@@ -1,5 +1,5 @@
 import java.awt.Graphics;
-
+import java.util.LinkedList;
 
 public class Lapin extends Neuneu {
 
@@ -42,13 +42,73 @@ public class Lapin extends Neuneu {
 	 * (re)Définition de la classe seComporter
 	 */
 	public void seComporter() {
-		
+		// instanciation des variables nécessaires
+		boolean aMange = false, aReprodui = false;
+
+		// il regarde d'abord s'il y a un Neuneu sur sa case
+		// si oui il se reproduit et se déplace
+		if (0 < this.getCoord().getPopulationCase().size()) {
+			this.seReproduire(this.getCoord().getPopulationCase().get(0));
+			aReprodui = true;
+			this.seDeplacer();
+		}
+
+		// sinon sur les cases adjacentes
+		int k = 0;
+		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
+		listeCasesAdj = this.getCoord().casesAdj();
+		while (k <= listeCasesAdj.size() || aReprodui == false) {
+			if (0 < listeCasesAdj.get(k).getPopulationCase().size()
+					&& aReprodui == false) {
+				// le Neuneu se reproduit
+				this.seReproduire(listeCasesAdj.get(k).getPopulationCase()
+						.get(0));
+				aReprodui = true;
+				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// se reproduire
+				this.setCoord(listeCasesAdj.get(k).getX(), listeCasesAdj.get(k)
+						.getY());
+			}
+			k++;
+		}
+
+		// s'il ne s'est pas reprodui, il va chercher à manger
+		if (aReprodui == false) {
+			// d'abord sur sa case
+			if (0 < this.getCoord().getPresenceNourriture().size()) {
+				this.manger(this.getCoord());
+				aMange = true;
+				this.seDeplacer();
+			}
+
+			// sinon sur les cases adjacentes
+			int i = 0;
+			while (i <= listeCasesAdj.size() || aMange == false) {
+
+				if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
+						&& aMange == false) {
+					// le Neuneu mange
+					this.manger(listeCasesAdj.get(i));
+					aMange = true;
+					// le Neuneu se déplace sur la case sur laquelle il vient de
+					// manger
+					this.setCoord(listeCasesAdj.get(i).getX(), listeCasesAdj
+							.get(i).getY());
+				}
+				i++;
+			}
+		}
+
+		// s'il n'a ni mangé ni ne s'est reproduit, il se déplace
+		if (aMange == false && aReprodui == false) {
+			this.seDeplacer();
+		}
 	}
 
 	@Override
 	public void dessinerObjet(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 }

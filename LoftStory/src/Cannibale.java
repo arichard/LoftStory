@@ -45,8 +45,6 @@ public class Cannibale extends Neuneu {
 	public void seComporter() {
 		// instanciation des variables ncessaires
 		boolean aMange = false, aReprodui = false;
-		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
-		listeCasesAdj = this.getCoord().casesAdj();
 
 		// il regarde d'abord s'il y a Nourriture/Neuneu sur sa case
 		// si oui il mange et se dplace
@@ -69,6 +67,8 @@ public class Cannibale extends Neuneu {
 		}
 
 		// si non, il regarde les cases adjacentes
+		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
+		listeCasesAdj = this.getCoord().casesAdj();
 		if (aMange == false) {
 			// liste la nourriture et les neuneus ˆ proximit
 			LinkedList<Double> listeDistancesNourriture = new LinkedList<Double>();
@@ -136,9 +136,15 @@ public class Cannibale extends Neuneu {
 
 		// s'il n'a pas mang, il va chercher ˆ se reproduire
 		if (aMange == false) {
+			// d'abord sur sa case
+			if (0 < this.getCoord().getPopulationCase().size()) {
+				this.seReproduire(this.getCoord().getPopulationCase().get(0));
+				aReprodui = true;
+				this.seDeplacer();
+			}
+			// sinon sur les cases adjacentes
 			int k = 0;
-			do {
-				// s'il y a un Neuneu disponible, il va se reproduire
+			while (k <= listeCasesAdj.size() || aReprodui == false) {
 				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 						&& aReprodui == false) {
 					// le Neuneu se reproduit
@@ -151,7 +157,7 @@ public class Cannibale extends Neuneu {
 							.get(k).getY());
 				}
 				k++;
-			} while (k <= listeCasesAdj.size() || aReprodui == false);
+			}
 		}
 
 		// s'il n'a ni mang ni ne s'est reproduit, il se dplace

@@ -45,8 +45,6 @@ public class Vorace extends Neuneu {
 	public void seComporter() {
 		// instanciation des variables nécessaires
 		boolean aMange = false, aReprodui = false;
-		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
-		listeCasesAdj = this.getCoord().casesAdj();
 
 		// il regarde d'abord s'il y a de la nourriture sur sa case
 		// si oui il mange et se déplace
@@ -57,6 +55,8 @@ public class Vorace extends Neuneu {
 		}
 
 		// si non il regarde la nourriture à proximité
+		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
+		listeCasesAdj = this.getCoord().casesAdj();
 		if (aMange == false) {
 			// liste la nourriture
 			LinkedList<Double> listeDistances = new LinkedList<Double>();
@@ -87,9 +87,15 @@ public class Vorace extends Neuneu {
 
 		// s'il n'a pas mangé, il va chercher à se reproduire
 		if (aMange == false) {
+			// d'abord sur sa case
+			if (0 < this.getCoord().getPopulationCase().size()) {
+				this.seReproduire(this.getCoord().getPopulationCase().get(0));
+				aReprodui = true;
+				this.seDeplacer();
+			}
+			// sinon sur les cases adjacentes
 			int k = 0;
-			do {
-				// s'il y a un Neuneu disponible, il va se reproduire
+			while (k <= listeCasesAdj.size() || aReprodui == false) {
 				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 						&& aReprodui == false) {
 					// le Neuneu se reproduit
@@ -102,7 +108,7 @@ public class Vorace extends Neuneu {
 							.get(k).getY());
 				}
 				k++;
-			} while (k <= listeCasesAdj.size() || aReprodui == false);
+			}
 		}
 
 		// s'il n'a ni mangé ni ne s'est reproduit, il se déplace
