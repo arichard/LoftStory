@@ -48,30 +48,41 @@ public class Vorace extends Neuneu {
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
 
-		// liste la nourriture à proximité
-		LinkedList<Double> listeDistances = new LinkedList<Double>();
-		for (CaseLoft C : listeCasesAdj) {
-			if (0 < C.getPresenceNourriture().size()) {
-				double distance = -Math.pow((this.getCoordX() - C.getX()), 2.0)
-						- Math.pow((this.getCoordY() - C.getY()), 2.0);
-				listeDistances.add(distance);
-			} else {
-				listeDistances.add(0.0);
-			}
+		// il regarde d'abord s'il y a de la nourriture sur sa case
+		// si oui il mange et se déplace
+		if (0 < this.getCoord().getPresenceNourriture().size()) {
+			this.manger(this.getCoord());
+			aMange = true;
+			this.seDeplacer();
 		}
 
-		// calcul de la distance minimale sur laquelle se trouve de la
-		// nourriture
-		Object obj = Collections.min(listeDistances);
-		Integer indiceDistanceMini = (Integer) obj;
-		// si la distance n'est pas nulle c'est qu'il y a de la nourriture
-		// donc le Neuneu mange
-		if (indiceDistanceMini < 0) {
-			this.manger(listeCasesAdj.get(indiceDistanceMini));
-			aMange = true;
-			// le Neuneu se déplace sur la case sur laquelle il vient de manger
-			this.setCoord(listeCasesAdj.get(indiceDistanceMini).getX(),
-					listeCasesAdj.get(indiceDistanceMini).getY());
+		// si non il regarde la nourriture à proximité
+		if (aMange == false) {
+			// liste la nourriture
+			LinkedList<Double> listeDistances = new LinkedList<Double>();
+			for (CaseLoft C : listeCasesAdj) {
+				if (0 < C.getPresenceNourriture().size()) {
+					double distance = -Math.pow((this.getCoordX() - C.getX()),
+							2.0) - Math.pow((this.getCoordY() - C.getY()), 2.0);
+					listeDistances.add(distance);
+				} else {
+					listeDistances.add(0.0);
+				}
+			}
+
+			// calcul distance mini sur laquelle se trouve de la nourriture
+			Object obj = Collections.min(listeDistances);
+			Integer indiceDistanceMini = (Integer) obj;
+			// si la distance n'est pas nulle c'est qu'il y a de la nourriture
+			// donc le Neuneu mange
+			if (indiceDistanceMini < 0) {
+				this.manger(listeCasesAdj.get(indiceDistanceMini));
+				aMange = true;
+				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// manger
+				this.setCoord(listeCasesAdj.get(indiceDistanceMini).getX(),
+						listeCasesAdj.get(indiceDistanceMini).getY());
+			}
 		}
 
 		// s'il n'a pas mangé, il va chercher à se reproduire

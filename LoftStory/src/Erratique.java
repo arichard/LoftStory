@@ -49,11 +49,19 @@ public class Erratique extends Neuneu {
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
 
-		// parcourt des cases pour manger
 		int i = 0;
-		do {
-			// s'il y a de la nourriture disponible et qu'il n'a pas mangé
-			// il va chercher à manger
+
+		// il regarde d'abord s'il y a de la nourriture sur sa case
+		// si oui il mange et se déplace
+		if (0 < this.getCoord().getPresenceNourriture().size()) {
+			this.manger(this.getCoord());
+			aMange = true;
+			this.seDeplacer();
+		}
+
+		// puis sur les cases adjacentes s'il n'a pas mangé
+		while (i <= listeCasesAdj.size() || aMange == false) {
+
 			if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
 					&& aMange == false) {
 				// le Neuneu mange
@@ -65,7 +73,7 @@ public class Erratique extends Neuneu {
 						.getY());
 			}
 			i++;
-		} while (i <= listeCasesAdj.size() || aMange == false);
+		}
 
 		// s'il n'a pas mangé, il va chercher à se reproduire
 		if (aMange == false) {

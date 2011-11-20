@@ -48,61 +48,90 @@ public class Cannibale extends Neuneu {
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
 
-		// liste la nourriture et les neuneus à proximité
-		LinkedList<Double> listeDistancesNourriture = new LinkedList<Double>();
-		LinkedList<Double> listeDistancesNeuneu = new LinkedList<Double>();
-		for (CaseLoft C : listeCasesAdj) {
-			double distance = -Math.pow((this.getCoordX() - C.getX()), 2.0)
-					- Math.pow((this.getCoordY() - C.getY()), 2.0);
-			if (0 < C.getPresenceNourriture().size()
-					&& 0 < C.getPopulationCase().size()) {
-				listeDistancesNourriture.add(distance);
-				listeDistancesNeuneu.add(distance);
-			} else if (0 < C.getPresenceNourriture().size()) {
-				listeDistancesNourriture.add(distance);
-				listeDistancesNeuneu.add(0.0);
-			} else if (0 < C.getPopulationCase().size()) {
-				listeDistancesNourriture.add(0.0);
-				listeDistancesNeuneu.add(distance);
-			} else {
-				listeDistancesNourriture.add(0.0);
-				listeDistancesNeuneu.add(0.0);
-			}
+		// il regarde d'abord s'il y a Nourriture/Neuneu sur sa case
+		// si oui il mange et se déplace
+		if (0 < this.getCoord().getPresenceNourriture().size()
+				&& 0 < this.getCoord().getPopulationCase().size()) {
+			this.manger(this.getCoord());
+			this.mangerNeuneu(this.getCoord());
+			aMange = true;
+			this.seDeplacer();
+		} else if (0 < this.getCoord().getPresenceNourriture().size()
+				&& 0 == this.getCoord().getPopulationCase().size()) {
+			this.manger(this.getCoord());
+			aMange = true;
+			this.seDeplacer();
+		} else if (0 == this.getCoord().getPresenceNourriture().size()
+				&& 0 < this.getCoord().getPopulationCase().size()) {
+			this.mangerNeuneu(this.getCoord());
+			aMange = true;
+			this.seDeplacer();
 		}
 
-		// calcul de la distance minimale sur laquelle se trouve qqc à manger
-		Object obj1 = Collections.min(listeDistancesNourriture);
-		Integer indiceDistanceMiniNourriture = (Integer) obj1;
-		Object obj2 = Collections.min(listeDistancesNeuneu);
-		Integer indiceDistanceMiniNeuneu = (Integer) obj2;
-		// cas Nourriture présente et Nourriture plus proche que Neuneu
-		if (indiceDistanceMiniNourriture < 0
-				&& indiceDistanceMiniNourriture < indiceDistanceMiniNeuneu) {
-			this.manger(listeCasesAdj.get(indiceDistanceMiniNourriture));
-			aMange = true;
-			// le Neuneu se déplace sur la case sur laquelle il vient de manger
-			this.setCoord(listeCasesAdj.get(indiceDistanceMiniNourriture)
-					.getX(), listeCasesAdj.get(indiceDistanceMiniNourriture)
-					.getY());
-		}
-		// cas Neuneu présent et Neuneu plus proche que Nourriture
-		else if (indiceDistanceMiniNeuneu < 0
-				&& indiceDistanceMiniNeuneu < indiceDistanceMiniNourriture) {
-			this.mangerNeuneu(listeCasesAdj.get(indiceDistanceMiniNeuneu));
-			aMange = true;
-			// le Neuneu se déplace sur la case sur laquelle il vient de manger
-			this.setCoord(listeCasesAdj.get(indiceDistanceMiniNeuneu).getX(),
-					listeCasesAdj.get(indiceDistanceMiniNeuneu).getY());
-		}
-		// cas Neuneu présent et Nourriture présent à égale distance
-		else if (indiceDistanceMiniNeuneu < 0
-				&& indiceDistanceMiniNeuneu == indiceDistanceMiniNourriture) {
-			this.manger(listeCasesAdj.get(indiceDistanceMiniNourriture));
-			this.mangerNeuneu(listeCasesAdj.get(indiceDistanceMiniNeuneu));
-			aMange = true;
-			// le Neuneu se déplace sur la case sur laquelle il vient de manger
-			this.setCoord(listeCasesAdj.get(indiceDistanceMiniNeuneu).getX(),
-					listeCasesAdj.get(indiceDistanceMiniNeuneu).getY());
+		// si non, il regarde les cases adjacentes
+		if (aMange == false) {
+			// liste la nourriture et les neuneus à proximité
+			LinkedList<Double> listeDistancesNourriture = new LinkedList<Double>();
+			LinkedList<Double> listeDistancesNeuneu = new LinkedList<Double>();
+			for (CaseLoft C : listeCasesAdj) {
+				double distance = -Math.pow((this.getCoordX() - C.getX()), 2.0)
+						- Math.pow((this.getCoordY() - C.getY()), 2.0);
+				if (0 < C.getPresenceNourriture().size()
+						&& 0 < C.getPopulationCase().size()) {
+					listeDistancesNourriture.add(distance);
+					listeDistancesNeuneu.add(distance);
+				} else if (0 < C.getPresenceNourriture().size()) {
+					listeDistancesNourriture.add(distance);
+					listeDistancesNeuneu.add(0.0);
+				} else if (0 < C.getPopulationCase().size()) {
+					listeDistancesNourriture.add(0.0);
+					listeDistancesNeuneu.add(distance);
+				} else {
+					listeDistancesNourriture.add(0.0);
+					listeDistancesNeuneu.add(0.0);
+				}
+			}
+
+			// calcul de la distance minimale sur laquelle se trouve qqc à
+			// manger
+			Object obj1 = Collections.min(listeDistancesNourriture);
+			Integer indiceDistanceMiniNourriture = (Integer) obj1;
+			Object obj2 = Collections.min(listeDistancesNeuneu);
+			Integer indiceDistanceMiniNeuneu = (Integer) obj2;
+			// cas Nourriture présente et Nourriture plus proche que Neuneu
+			if (indiceDistanceMiniNourriture < 0
+					&& indiceDistanceMiniNourriture < indiceDistanceMiniNeuneu) {
+				this.manger(listeCasesAdj.get(indiceDistanceMiniNourriture));
+				aMange = true;
+				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// manger
+				this.setCoord(listeCasesAdj.get(indiceDistanceMiniNourriture)
+						.getX(), listeCasesAdj
+						.get(indiceDistanceMiniNourriture).getY());
+			}
+			// cas Neuneu présent et Neuneu plus proche que Nourriture
+			else if (indiceDistanceMiniNeuneu < 0
+					&& indiceDistanceMiniNeuneu < indiceDistanceMiniNourriture) {
+				this.mangerNeuneu(listeCasesAdj.get(indiceDistanceMiniNeuneu));
+				aMange = true;
+				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// manger
+				this.setCoord(listeCasesAdj.get(indiceDistanceMiniNeuneu)
+						.getX(), listeCasesAdj.get(indiceDistanceMiniNeuneu)
+						.getY());
+			}
+			// cas Neuneu présent et Nourriture présent à égale distance
+			else if (indiceDistanceMiniNeuneu < 0
+					&& indiceDistanceMiniNeuneu == indiceDistanceMiniNourriture) {
+				this.manger(listeCasesAdj.get(indiceDistanceMiniNourriture));
+				this.mangerNeuneu(listeCasesAdj.get(indiceDistanceMiniNeuneu));
+				aMange = true;
+				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// manger
+				this.setCoord(listeCasesAdj.get(indiceDistanceMiniNeuneu)
+						.getX(), listeCasesAdj.get(indiceDistanceMiniNeuneu)
+						.getY());
+			}
 		}
 
 		// s'il n'a pas mangé, il va chercher à se reproduire
@@ -145,8 +174,7 @@ public class Cannibale extends Neuneu {
 
 		// on ajoute l'énergie du Neuneu choisi au Cannibale
 		int nouvelleEnergie = this.getEnergie()
-				+ C.getPopulationCase().get(indiceEnergieMax)
-						.getEnergie();
+				+ C.getPopulationCase().get(indiceEnergieMax).getEnergie();
 		this.setEnergie(nouvelleEnergie);
 		// on enlève le Neuneu ainsi mangé du Loft
 		C.getLoft().virerNeuneu(C.getPopulationCase().get(indiceEnergieMax));
