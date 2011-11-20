@@ -57,17 +57,19 @@ public class Lapin extends Neuneu {
 		int k = 0;
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
-		while (k < listeCasesAdj.size() || aReprodui == false) {
-			if (0 < listeCasesAdj.get(k).getPopulationCase().size()
-					&& aReprodui == false) {
-				// le Neuneu se reproduit
-				this.seReproduire(listeCasesAdj.get(k).getPopulationCase()
-						.get(0));
-				aReprodui = true;
-				// le Neuneu se dŽplace sur la case sur laquelle il vient de
-				// se reproduire
-				this.setCoord(listeCasesAdj.get(k).getX(), listeCasesAdj.get(k)
-						.getY());
+		while (k < listeCasesAdj.size()) {
+			if (aReprodui == false) {
+				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
+						&& aReprodui == false) {
+					// le Neuneu se reproduit
+					this.seReproduire(listeCasesAdj.get(k).getPopulationCase()
+							.get(0));
+					aReprodui = true;
+					// le Neuneu se dŽplace sur la case sur laquelle il vient de
+					// se reproduire
+					this.setCoord(listeCasesAdj.get(k).getX(), listeCasesAdj
+							.get(k).getY());
+				}
 			}
 			k++;
 		}
@@ -83,17 +85,19 @@ public class Lapin extends Neuneu {
 
 			// sinon sur les cases adjacentes
 			int i = 0;
-			while (i < listeCasesAdj.size() || aMange == false) {
-
-				if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
-						&& aMange == false) {
-					// le Neuneu mange
-					this.manger(listeCasesAdj.get(i));
-					aMange = true;
-					// le Neuneu se dŽplace sur la case sur laquelle il vient de
-					// manger
-					this.setCoord(listeCasesAdj.get(i).getX(), listeCasesAdj
-							.get(i).getY());
+			while (i < listeCasesAdj.size()) {
+				if (aMange == false) {
+					if (0 < listeCasesAdj.get(i).getPresenceNourriture().size()
+							&& aMange == false) {
+						// le Neuneu mange
+						this.manger(listeCasesAdj.get(i));
+						aMange = true;
+						// le Neuneu se dŽplace sur la case sur laquelle il
+						// vient de
+						// manger
+						this.setCoord(listeCasesAdj.get(i).getX(),
+								listeCasesAdj.get(i).getY());
+					}
 				}
 				i++;
 			}

@@ -95,17 +95,20 @@ public class Vorace extends Neuneu {
 			}
 			// sinon sur les cases adjacentes
 			int k = 0;
-			while (k < listeCasesAdj.size() || aReprodui == false) {
-				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
-						&& aReprodui == false) {
-					// le Neuneu se reproduit
-					this.seReproduire(listeCasesAdj.get(k).getPopulationCase()
-							.get(0));
-					aReprodui = true;
-					// le Neuneu se dŽplace sur la case sur laquelle il vient de
-					// se reproduire
-					this.setCoord(listeCasesAdj.get(k).getX(), listeCasesAdj
-							.get(k).getY());
+			while (k < listeCasesAdj.size()) {
+				if (aReprodui == false) {
+					if (0 < listeCasesAdj.get(k).getPopulationCase().size()
+							&& aReprodui == false) {
+						// le Neuneu se reproduit
+						this.seReproduire(listeCasesAdj.get(k)
+								.getPopulationCase().get(0));
+						aReprodui = true;
+						// le Neuneu se dŽplace sur la case sur laquelle il
+						// vient de
+						// se reproduire
+						this.setCoord(listeCasesAdj.get(k).getX(),
+								listeCasesAdj.get(k).getY());
+					}
 				}
 				k++;
 			}
