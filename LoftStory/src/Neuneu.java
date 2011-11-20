@@ -110,7 +110,7 @@ public abstract class Neuneu implements ObjetDessinable {
 	}
 
 	/**
-	 * Pour l'action de manger des Neuneus
+	 * Pour l'action de manger de la nourriture des Neuneus
 	 */
 	protected void manger(CaseLoft C) {
 		// choix de la nourriture ayant la plus grande quantité énergétique
