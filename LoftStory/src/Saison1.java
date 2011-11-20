@@ -5,19 +5,13 @@ import java.util.LinkedList;
 public class Saison1 {
 
 	public static int nombreLofteurs = 4;
-	public static int tailleLoft = 30;
+	public static int hLoft = 5;
+	public static int lLoft = 6;
 	public static float proportionErratique = .75f;
-	public static float proportionVorace = .25f;
-	public static float proportionCannibale = 0f;
-	
-	public static LinkedList<Neuneu> L;
-	Loft loft1=new Loft();
-	CaseLoft X = new CaseLoft (-1,-1, loft1);
-	Neuneu Samantha = new Neuneu(10,false,X);
-	Neuneu Brandon = new Neuneu(10,false,X);
-	Neuneu Ashley = new Neuneu(10,false,X);
-	Neuneu Steeve = new Neuneu(10,false,X);
-	
+	public static float proportionVorace = 0f;
+	public static float proportionCannibale = .25f;
+	public static float proportionLapin = 0f;
+		
 	
 	/**
 	 * @param args
@@ -26,42 +20,66 @@ public class Saison1 {
 		new Saison1().primeTime();
 	}
 	
-	public void primeTime() {
+	public void primeTime() {	
+		
+		LinkedList<Neuneu> L = new LinkedList<Neuneu>();
+		int EnergieParDefaut=10;
+		
+		int nombreErratique=(int)(nombreLofteurs*proportionErratique);
+		int nombreVorace=(int)(nombreLofteurs*proportionVorace);
+		int nombreCannibale=(int)(nombreLofteurs*proportionCannibale);
+		int nombreLapin=(int)(nombreLofteurs*proportionLapin);
+		
+		Loft loft1=new Loft(lLoft,hLoft);
+		CaseLoft X = new CaseLoft (-1,-1, loft1);
+		
+		// 
+		Erratique[] e = new Erratique[nombreErratique];
+		for (int i=1; i<nombreErratique;i++){
+		e[i-1] = new Erratique(i,10,EnergieParDefaut,false,X);
+		L.add(e[i-1]);
+		}
+		
+		Vorace[] v = new Vorace[nombreVorace];
+		for (int j=1; j<nombreVorace;j++){
+		v[j-1] = new Vorace (j,10,EnergieParDefaut,false,X);
+		L.add(v[j-1]);
+		}
+		
+		Cannibale[] c = new Cannibale[nombreCannibale];
+		for (int k=1; k<nombreCannibale;k++){
+		c[k-1] = new Cannibale (k,10,EnergieParDefaut,false,X);	
+		L.add(c[k-1]);
+		}
+		
+		Lapin[] la = new Lapin[nombreLapin];
+		for (int l=1; l<nombreCannibale;l++){
+		la[l-1] = new Lapin (l,10,EnergieParDefaut,false,X);
+		L.add(la[l-1]);
+		}	
+		
+		loft1.remplissageAleatoire(L);
+		
 		ZoneGraphique zone = new ZoneGraphique("Mon premier loft");
-		Loft loft = new Loft(tailleLoft,zone);
-		loft.remplissageAleatoire(L);
-		zone.ajouterObjet(loft);
+		zone.ajouterObjet(loft1);
 		
+		for (Neuneu n : L){
+			zone.ajouterObjet(n);
+		}
 		
-		
-		for (int i=0 ; i<nombreLofteurs ; i++) {
-			double x = Math.random();
-			if (x<proportionVorace) {
-				loft.add(new Vorace(loft,
-						(int)(Math.random()*29),
-						(int)(Math.random()*29),
-						3));
+		LinkedList<Neuneu> M = new LinkedList<Neuneu>();
+		for (int i=0; i<lLoft;i++){
+			for(int j=0; j<hLoft;j++){
+			CaseLoft A = loft1.getMaison()[i][j];
+			M.addAll(A.getPopulationCase());
+			if (M.isEmpty()==true){
+			System.out.println("LoftStory 1 c'est fini, rendez-vous très bientôt pour la saison 2!");	
 			}
-			else {
-				x -= proportionVorace;
-				if (x<proportionErratique) {
-					loft.add(new Erratique(loft,
-							(int)(Math.random()*29),
-							(int)(Math.random()*29)));
-				}
-				else {
-					x -= proportionErratique;
-					if (x<proportionCannibale) {
-						loft.add(new Cannibale(loft,
-						(int)(Math.random()*29),
-						(int)(Math.random()*29),
-						5));
-					}
-				}
+			else {loft1.lancerTourDeJeu();}
+			    
 			}
 		}
 		
-		loft.lancerTourDeJeu();
 	}
 
 }
