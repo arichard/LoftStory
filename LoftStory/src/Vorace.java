@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -122,7 +123,12 @@ public class Vorace extends Neuneu {
 
 	@Override
 	public void dessinerObjet(Graphics g) {
-		// TODO Auto-generated method stub
+		int x = this.getCoordX();
+		int y = this.getCoordY();
+		int tailleAffichee = ZoneGraphique.TAILLE_CASELOFT;
+		g.setColor(Color.BLUE);
+		g.fillOval(x * tailleAffichee, y * tailleAffichee, tailleAffichee,
+				tailleAffichee);
 
 	}
 

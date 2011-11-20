@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
@@ -7,6 +8,7 @@ public class Loft implements ObjetDessinable {
 	protected int h; // taille verticale de la matrice
 	protected int tailleLoft; // nombre de cases
 	protected CaseLoft[][] maison;
+	protected ZoneGraphique affichage;
 
 	// constructeurs
 	public Loft() {
@@ -14,13 +16,15 @@ public class Loft implements ObjetDessinable {
 		this.setH(0);
 		this.setMaison(new CaseLoft[0][0]);
 		this.setTailleLoft(0);
+		this.affichage = new ZoneGraphique();
 	}
 
-	public Loft(int w, int h) {
+	public Loft(int w, int h, ZoneGraphique z) {
 		this.w = w;
 		this.h = h;
 		this.setMaison(new CaseLoft[w][h]);
 		this.setTailleLoft(w * h);
+		this.affichage = z;
 
 		// remplissage de la maison de CaseLoft
 		for (int i = 0; i < w; i++) {
@@ -116,6 +120,7 @@ public class Loft implements ObjetDessinable {
 				CaseLoft A = this.getMaison()[i][j];
 				if (A.getPopulationCase().size() < 1) {
 					A.ajouterNeuneu(N);
+					this.affichage.ajouterObjet(N);
 				}
 			}
 		}
@@ -129,6 +134,7 @@ public class Loft implements ObjetDessinable {
 		int Y = N.getCoordY();
 		CaseLoft A = maison[X][Y];
 		A.retirerNeuneu(N);
+		this.affichage.retirerObjet(N);
 		this.majPopulation();
 
 	}
@@ -142,8 +148,23 @@ public class Loft implements ObjetDessinable {
 
 	@Override
 	public void dessinerObjet(Graphics g) {
-		// TODO Auto-generated method stub
-
+		int tailleAffichee = ZoneGraphique.TAILLE_CASELOFT;
+		for (int i = 0; i < w; i=i+2) {
+			for (int j = 0; j < h; j=j+2) {
+				g.setColor(Color.lightGray);
+				g.fillRect(i * tailleAffichee, j * tailleAffichee,
+						tailleAffichee, tailleAffichee);}
+		}
+		
+		for (int k = 1; k < w; k = k + 2) {
+			for (int l = 1; l < h; l = l + 2) {
+				g.setColor(Color.white);
+				g.fillRect(k * tailleAffichee, l * tailleAffichee,
+						tailleAffichee, tailleAffichee);
+			}
+		}
+		
+		
 	}
 
 }

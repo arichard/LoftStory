@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
@@ -111,7 +112,12 @@ public class Lapin extends Neuneu {
 
 	@Override
 	public void dessinerObjet(Graphics g) {
-		// TODO Auto-generated method stub
+		int x = this.getCoordX();
+		int y = this.getCoordY();
+		int tailleAffichee = ZoneGraphique.TAILLE_CASELOFT;
+		g.setColor(Color.PINK);
+		g.fillOval(x * tailleAffichee, y * tailleAffichee, tailleAffichee,
+				tailleAffichee);
 
 	}
 

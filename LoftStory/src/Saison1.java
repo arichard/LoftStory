@@ -4,13 +4,13 @@ import java.util.LinkedList;
 
 public class Saison1 {
 
-	public static int nombreLofteurs = 4;
-	public static int hLoft = 5;
-	public static int lLoft = 6;
-	public static float proportionErratique = .75f;
-	public static float proportionVorace = 0f;
-	public static float proportionCannibale = .25f;
-	public static float proportionLapin = 0f;
+	public static int nombreLofteurs = 10;
+	public static int hLoft = 25;
+	public static int lLoft = 25;
+	public static float proportionErratique = .6f;
+	public static float proportionVorace = .1f;
+	public static float proportionCannibale = .2f;
+	public static float proportionLapin = .1f;
 
 	/**
 	 * @param args
@@ -29,7 +29,9 @@ public class Saison1 {
 		int nombreCannibale = (int) (nombreLofteurs * proportionCannibale);
 		int nombreLapin = (int) (nombreLofteurs * proportionLapin);
 
-		Loft loft1 = new Loft(lLoft, hLoft);
+		ZoneGraphique zone = new ZoneGraphique("Mon premier loft", lLoft, hLoft);
+		Loft loft1 = new Loft(lLoft, hLoft, zone);
+		zone.ajouterObjet(loft1);
 		CaseLoft X = new CaseLoft(-1, -1, loft1);
 
 		//
@@ -59,27 +61,28 @@ public class Saison1 {
 
 		loft1.remplissageAleatoire(L);
 
-		ZoneGraphique zone = new ZoneGraphique("Mon premier loft");
-		zone.ajouterObjet(loft1);
-
+		/*
 		for (Neuneu n : L) {
 			zone.ajouterObjet(n);
 		}
+		*/
 
-		LinkedList<Neuneu> M = new LinkedList<Neuneu>();
-		for (int i = 0; i < lLoft; i++) {
-			for (int j = 0; j < hLoft; j++) {
-				CaseLoft A = loft1.getMaison()[i][j];
-				M.addAll(A.getPopulationCase());
-				if (M.isEmpty() == true) {
-					System.out
-							.println("LoftStory 1 c'est fini, rendez-vous très bientôt pour la saison 2!");
-				} else {
-					loft1.lancerTourDeJeu();
-				}
-
-			}
+		// lancement d'un nombre limitŽ de tours de jeu
+		for (int i = 0; i < 10000; i++) {
+			loft1.lancerTourDeJeu();
 		}
+		System.out.println("Fin du Loft Saison 1 !");
+
+		/*
+		 * LinkedList<Neuneu> M = new LinkedList<Neuneu>(); for (int i = 0; i <
+		 * lLoft; i++) { for (int j = 0; j < hLoft; j++) { CaseLoft A =
+		 * loft1.getMaison()[i][j]; M.addAll(A.getPopulationCase()); if
+		 * (M.isEmpty() == true) { System.out .println(
+		 * "LoftStory 1 c'est fini, rendez-vous très bientôt pour la saison 2!"
+		 * ); } else { loft1.lancerTourDeJeu(); }
+		 * 
+		 * } }
+		 */
 
 	}
 
