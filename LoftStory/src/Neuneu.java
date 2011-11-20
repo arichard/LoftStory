@@ -1,3 +1,6 @@
+import java.util.Collections;
+import java.util.LinkedList;
+
 public abstract class Neuneu implements ObjetDessinable {
 
 	/**
@@ -91,25 +94,40 @@ public abstract class Neuneu implements ObjetDessinable {
 	 * Pour l'action de déplacement aléatoire des Neuneus
 	 */
 	protected void seDeplacer() {
-		// on choisit aléatoirement la case adjacente sur laquelle va aller le Neuneu
-		int mini = 1, maxi = this.getCoord().casesAdj().size()+1;
-		int random = (int)(Math.random() * (maxi-mini)) + mini;
-		
+		// on choisit aléatoirement la case adjacente sur laquelle va aller le
+		// Neuneu
+		int mini = 1, maxi = this.getCoord().casesAdj().size() + 1;
+		int random = (int) (Math.random() * (maxi - mini)) + mini;
+
 		// on va définir les nouvelles coordonnées du Neuneu
 		// en récupérant les coordonnées de la case choisie aléatoirement
-		int i=0;
-		do{
+		int i = 0;
+		do {
 			i++;
-		}while(i<random);
-		this.setCoord(this.getCoord().casesAdj().get(i).getX(), this.getCoord().casesAdj().get(i).getY());
+		} while (i < random);
+		this.setCoord(this.getCoord().casesAdj().get(i).getX(), this.getCoord()
+				.casesAdj().get(i).getY());
 	}
 
 	/**
 	 * Pour l'action de manger des Neuneus
 	 */
 	protected void manger(CaseLoft C) {
-		//enlever l'énergie de la nourriture mangée
-		//enlever la nourriture de la liste presencenNourriture si sa QtéEnergie est nulle
+		// choix de la nourriture ayant la plus grande quantité énergétique
+		LinkedList<Integer> listeQteEnergetique = new LinkedList<Integer>();
+		for (Nourriture N : C.getPresenceNourriture()) {
+			listeQteEnergetique.add(N.getQteEnergetique());
+		}
+		Object obj = Collections.min(listeQteEnergetique);
+		Integer indiceQteEnergetiqueMax = (Integer) obj;
+
+		// on ajoute l'énergie de la nourriture choisie au Neuneu
+		int nouvelleEnergie = this.getEnergie()
+				+ C.getPresenceNourriture().get(indiceQteEnergetiqueMax)
+						.getQteEnergetique();
+		this.setEnergie(nouvelleEnergie);
+		// on enlève la nourriture mangée de la liste
+		C.getPresenceNourriture().remove(indiceQteEnergetiqueMax);
 	}
 
 	/**
