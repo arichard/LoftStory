@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
+import sun.java2d.loops.DrawLine;
+
 public class Loft implements ObjetDessinable {
 
 	protected int w; // taille horizontale de la matrice
@@ -148,23 +150,18 @@ public class Loft implements ObjetDessinable {
 
 	@Override
 	public void dessinerObjet(Graphics g) {
-		int tailleAffichee = ZoneGraphique.TAILLE_CASELOFT;
-		for (int i = 0; i < w; i=i+2) {
-			for (int j = 0; j < h; j=j+2) {
-				g.setColor(Color.lightGray);
-				g.fillRect(i * tailleAffichee, j * tailleAffichee,
-						tailleAffichee, tailleAffichee);}
+		int taille = ZoneGraphique.TAILLE_CASELOFT;
+		g.setColor(Color.lightGray);
+		g.fillRect(0, 0, w * taille, h * taille);
+		for (int i = 0; i < w; i++) {
+			g.setColor(Color.GRAY);
+			g.drawLine(i * taille, 0, i * taille, h * taille);
 		}
-		
-		for (int k = 1; k < w; k = k + 2) {
-			for (int l = 1; l < h; l = l + 2) {
-				g.setColor(Color.white);
-				g.fillRect(k * tailleAffichee, l * tailleAffichee,
-						tailleAffichee, tailleAffichee);
-			}
+		for (int j = 0; j < h; j++) {
+			g.setColor(Color.GRAY);
+			g.drawLine(0, j * taille, w * taille, j * taille);
 		}
-		
-		
+
 	}
 
 }

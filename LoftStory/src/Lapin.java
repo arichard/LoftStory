@@ -112,12 +112,10 @@ public class Lapin extends Neuneu {
 
 	@Override
 	public void dessinerObjet(Graphics g) {
-		int x = this.getCoordX();
-		int y = this.getCoordY();
-		int tailleAffichee = ZoneGraphique.TAILLE_CASELOFT;
+		int taille = ZoneGraphique.TAILLE_CASELOFT;
 		g.setColor(Color.PINK);
-		g.fillOval(x * tailleAffichee, y * tailleAffichee, tailleAffichee,
-				tailleAffichee);
+		g.fillOval(this.getCoordX() * taille, this.getCoordY() * taille,
+				taille, taille);
 
 	}
 

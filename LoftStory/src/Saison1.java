@@ -62,10 +62,8 @@ public class Saison1 {
 		loft1.remplissageAleatoire(L);
 
 		/*
-		for (Neuneu n : L) {
-			zone.ajouterObjet(n);
-		}
-		*/
+		 * for (Neuneu n : L) { zone.ajouterObjet(n); }
+		 */
 
 		// lancement d'un nombre limité de tours de jeu
 		for (int i = 0; i < 10000; i++) {
