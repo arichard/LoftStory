@@ -2,15 +2,15 @@ import java.util.LinkedList;
 
 public class CaseLoft {
 
-	private LinkedList<Neuneu> populationCase;
-	private LinkedList<Nourriture> presenceNourriture;
-	private int x;
-	private int y;
-	private Loft loft1;
+	protected LinkedList<Neuneu> populationCase;
+	protected LinkedList<Nourriture> presenceNourriture;
+	protected int x;
+	protected int y;
+	protected Loft loft1;
 
 	public CaseLoft() {
-		populationCase = new LinkedList<Neuneu>();
-		presenceNourriture = new LinkedList<Nourriture>();
+		this.setPopulationCase(new LinkedList<Neuneu>());
+		this.setPresenceNourriture(new LinkedList<Nourriture>());
 		this.x = 0;
 		this.y = 0;
 		this.loft1 = new Loft();

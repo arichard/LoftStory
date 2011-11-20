@@ -1,8 +1,8 @@
 
 public class Nourriture {
 
-	private String type;
-	private int qteEnergetique;
+	protected String type;
+	protected int qteEnergetique;
 	
 	
 	public Nourriture() {

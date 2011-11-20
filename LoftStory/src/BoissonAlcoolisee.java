@@ -1,10 +1,7 @@
+public class BoissonAlcoolisee extends Nourriture {
 
-public class BoissonAlcoolisee extends Nourriture{
-	
-		
-	public BoissonAlcoolisee(){
-	super();
+	public BoissonAlcoolisee() {
+		super();
 	}
-	
-	
+
 }

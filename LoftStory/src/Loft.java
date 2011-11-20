@@ -3,23 +3,24 @@ import java.util.LinkedList;
 
 public class Loft implements ObjetDessinable {
 
-	private int w; // taille horizontale de la matrice
-	private int h; // taille verticale de la matrice
-	private int tailleLoft; // nombre de cases
-	private CaseLoft[][] maison;
+	protected int w; // taille horizontale de la matrice
+	protected int h; // taille verticale de la matrice
+	protected int tailleLoft; // nombre de cases
+	protected CaseLoft[][] maison;
 
 	// constructeurs
 	public Loft() {
-		w = 0;
-		h = 0;
-		CaseLoft[][] maison = new CaseLoft[w][h];
-		tailleLoft = w * h;
+		this.setW(0);
+		this.setH(0);
+		this.setMaison(new CaseLoft[0][0]);
+		this.setTailleLoft(0);
 	}
 
 	public Loft(int w, int h) {
 		this.w = w;
 		this.h = h;
-		CaseLoft[][] maison = new CaseLoft[w][h];
+		this.setMaison(new CaseLoft[w][h]);
+		this.setTailleLoft(w * h);
 	}
 
 	// getters et setters
@@ -45,6 +46,14 @@ public class Loft implements ObjetDessinable {
 
 	public void setMaison(CaseLoft[][] maison) {
 		this.maison = maison;
+	}
+
+	public int getTailleLoft() {
+		return tailleLoft;
+	}
+
+	public void setTailleLoft(int tailleLoft) {
+		this.tailleLoft = tailleLoft;
 	}
 
 	// mise à jour de la population de chaque case, vérifier si aucun Neuneu
