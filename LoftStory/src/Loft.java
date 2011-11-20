@@ -21,6 +21,13 @@ public class Loft implements ObjetDessinable {
 		this.h = h;
 		this.setMaison(new CaseLoft[w][h]);
 		this.setTailleLoft(w * h);
+
+		// remplissage de la maison de CaseLoft
+		for (int i = 0; i < w; i++) {
+			for (int j = 0; j < h; j++) {
+				this.maison[i][j] = new CaseLoft(i, j, this);
+			}
+		}
 	}
 
 	// getters et setters
