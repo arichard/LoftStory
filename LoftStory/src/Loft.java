@@ -89,7 +89,18 @@ public class Loft implements ObjetDessinable {
 		for (int i = 1; i < this.getW(); i++) {
 			for (int j = 1; j < this.getH(); j++) {
 				CaseLoft A = this.getMaison()[i][j];
+				// liste temporaire pour Žviter les
+				// "ConcurrentModificationException"
+				// qui apparaissent lorsqu'on modifie la liste en cours
+				// d'itŽration
+				// cad la modification de la population d'une CaseLoft
+				// alors qu'on est en train de regarder cette population dans
+				// une boucle for
+				LinkedList<Neuneu> listeTemp = new LinkedList<Neuneu>();
 				for (Neuneu N : A.getPopulationCase()) {
+					listeTemp.add(N);
+				}
+				for (Neuneu N : listeTemp) {
 					N.seComporter();
 				}
 			}
