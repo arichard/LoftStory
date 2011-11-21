@@ -38,22 +38,19 @@ public class Saison1 {
 			L.add(e[i]);
 		}
 		
-		
 		Vorace[] v = new Vorace[nombreVorace];
 		for (int j = 0; j < nombreVorace; j++) {
 			v[j] = new Vorace(j, EnergieParDefaut, EnergieParDefaut, false, X);
 			L.add(v[j]);
 		}
 		
-
-		/*
 		Cannibale[] c = new Cannibale[nombreCannibale];
 		for (int k = 0; k < nombreCannibale; k++) {
 			c[k] = new Cannibale(k, EnergieParDefaut, EnergieParDefaut, false,
 					X);
 			L.add(c[k]);
 		}
-		*/
+		
 
 		/*
 		Lapin[] lap = new Lapin[nombreLapin];

@@ -86,7 +86,7 @@ public class Loft implements ObjetDessinable {
 	}
 
 	/**
-	 * Mise à jour de la population du Loft
+	 * Mise a jour de la population du Loft
 	 */
 	public void majPopulation() {
 		LinkedList<Neuneu> L = new LinkedList<Neuneu>();
@@ -113,33 +113,30 @@ public class Loft implements ObjetDessinable {
 	 * Lancement d'un tour de jeu
 	 */
 	public void lancerTourDeJeu() {
+		
+		LinkedList<Neuneu> listeTemp = new LinkedList<Neuneu>();
+		
 		// on parcourt les cases du Loft
 		for (int i = 0; i < this.getW(); i++) {
 			for (int j = 0; j < this.getH(); j++) {
 				CaseLoft A = this.getMaison()[i][j];
-				// liste temporaire pour éviter les
-				// "ConcurrentModificationException"
-				// qui apparaissent lorsqu'on modifie la liste en cours
-				// d'itération
-				// cad la modification de la population d'une CaseLoft
-				// alors qu'on est en train de regarder cette population dans
-				// une boucle for
-				LinkedList<Neuneu> listeTemp = new LinkedList<Neuneu>();
+				// on recupere la liste des Neuneus presents
 				for (Neuneu N : A.getPopulationCase()) {
 					listeTemp.add(N);
 				}
-				for (Neuneu N : listeTemp) {
-					// on lance la methode seComporter
-					// pour chaque Neuneu des cases du jeu
-					N.seComporter();
-					// on actualise
-					N.getCoord().getLoft().getAffichage().repaint();
-					// on met à jour la population du Loft
-					this.majPopulation();
-					// on actualise
-					N.getCoord().getLoft().getAffichage().repaint();
-				}
 			}
+		}
+		
+		// pour chaque Neuneu present dans le Loft
+		for (Neuneu N : listeTemp) {
+			// on lance la methode seComporter
+			N.seComporter();
+			// on actualise
+			N.getCoord().getLoft().getAffichage().repaint();
+			// on met a jour la population du Loft
+			this.majPopulation();
+			// on actualise
+			N.getCoord().getLoft().getAffichage().repaint();
 		}
 	}
 
@@ -165,13 +162,13 @@ public class Loft implements ObjetDessinable {
 					A.ajouterNeuneu(N);
 					// on l'ajoute pour l'affichage
 					this.affichage.ajouterObjet(N);
-					// on met à jour la population du Loft
+					// on met a jour la population du Loft
 					this.setPopulation(this.getPopulation() + 1);
 					estInsere = true;
 				}
 			} while (estInsere == false);
 		} else {
-			// sinon on l'enlève
+			// sinon on l'enleve
 			N.setCoord(-10, -10);
 			N.setPresenceLoft(false);
 		}
@@ -191,10 +188,10 @@ public class Loft implements ObjetDessinable {
 			A.retirerNeuneu(N);
 			// on le retire de l'affichage
 			this.affichage.retirerObjet(N);
-			// on met à jour la population du Loft
+			// on met a jour la population du Loft
 			this.setPopulation(this.getPopulation() - 1);
 		}
-		// sinon il est déjà hors du Loft
+		// sinon il est deja hors du Loft
 	}
 
 	/**
@@ -208,12 +205,12 @@ public class Loft implements ObjetDessinable {
 				.nextInt(this.h)];
 		// on ajoute la nourriture
 		A.ajouterNourriture(N);
-		// on met à jour l'affichage
+		// on met a jour l'affichage
 		this.affichage.ajouterObjet(N);
 	}
 
 	/**
-	 * Remplir aléatoirement le Loft de Neuneus
+	 * Remplir aleatoirement le Loft de Neuneus
 	 */
 	public void remplissageAleatoire(LinkedList<Neuneu> L,
 			LinkedList<Nourriture> M) {

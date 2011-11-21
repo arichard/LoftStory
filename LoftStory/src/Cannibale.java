@@ -71,34 +71,47 @@ public class Cannibale extends Neuneu {
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
 		if (aMange == false) {
+			
 			// liste la nourriture et les neuneus à proximité
-			LinkedList<Double> listeDistancesNourriture = new LinkedList<Double>();
-			LinkedList<Double> listeDistancesNeuneu = new LinkedList<Double>();
+			double listeDistancesNourriture[] = new double[8];
+			double listeDistancesNeuneu[] = new double[8];
+			int i=0;
 			for (CaseLoft C : listeCasesAdj) {
 				double distance = -Math.pow((this.getCoordX() - C.getX()), 2.0)
 						- Math.pow((this.getCoordY() - C.getY()), 2.0);
 				if (0 < C.getPresenceNourriture().size()
 						&& 0 < C.getPopulationCase().size()) {
-					listeDistancesNourriture.add(distance);
-					listeDistancesNeuneu.add(distance);
+					listeDistancesNourriture[i]=distance;
+					listeDistancesNeuneu[i]=distance;
 				} else if (0 < C.getPresenceNourriture().size()) {
-					listeDistancesNourriture.add(distance);
-					listeDistancesNeuneu.add(0.0);
+					listeDistancesNourriture[i]=distance;
+					listeDistancesNeuneu[i]=0.0;
 				} else if (0 < C.getPopulationCase().size()) {
-					listeDistancesNourriture.add(0.0);
-					listeDistancesNeuneu.add(distance);
+					listeDistancesNourriture[i]=0.0;
+					listeDistancesNeuneu[i]=distance;
 				} else {
-					listeDistancesNourriture.add(0.0);
-					listeDistancesNeuneu.add(0.0);
+					listeDistancesNourriture[i]=0.0;
+					listeDistancesNeuneu[i]=0.0;
 				}
+				i++;
 			}
 
-			// calcul de la distance minimale sur laquelle se trouve qqc à
-			// manger
-			Object obj1 = Collections.min(listeDistancesNourriture);
-			Integer indiceDistanceMiniNourriture = (Integer) obj1;
-			Object obj2 = Collections.min(listeDistancesNeuneu);
-			Integer indiceDistanceMiniNeuneu = (Integer) obj2;
+			// calcul des distances minimales
+			double distanceMiniNourriture = 0.0, distanceMiniNeuneu = 0.0;
+			int indiceDistanceMiniNourriture = 0, indiceDistanceMiniNeuneu=0;
+			for (int m = 0; m < listeDistancesNourriture.length; m++) {
+				if (listeDistancesNourriture[m] > distanceMiniNourriture) {
+					distanceMiniNourriture = listeDistancesNourriture[m];
+					indiceDistanceMiniNourriture = m;
+				}
+			}
+			for (int p = 0; p < listeDistancesNeuneu.length; p++) {
+				if (listeDistancesNeuneu[p] > distanceMiniNeuneu) {
+					distanceMiniNeuneu = listeDistancesNeuneu[p];
+					indiceDistanceMiniNeuneu = p;
+				}
+			}
+			
 			// cas Nourriture présente et Nourriture plus proche que Neuneu
 			if (indiceDistanceMiniNourriture < 0
 					&& indiceDistanceMiniNourriture < indiceDistanceMiniNeuneu) {
