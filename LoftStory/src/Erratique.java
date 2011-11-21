@@ -21,8 +21,8 @@ public class Erratique extends Neuneu {
 	 */
 	public void seReproduire(Neuneu N) {
 		// Reproduction = consommation d'energie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 4);
-		N.setEnergie(N.getEnergie() - 4);
+		this.setEnergie(this.getEnergie() - 5);
+		N.setEnergie(N.getEnergie() - 5);
 
 		// Definition des attributs par defaut du bebe
 		int idBaby = 0;
@@ -105,8 +105,6 @@ public class Erratique extends Neuneu {
 		if (aMange == false && aReprodui == false) {
 			this.seDeplacer();
 		}
-		
-		this.getCoord().getLoft().getAffichage().repaint();
 	}
 
 	@Override

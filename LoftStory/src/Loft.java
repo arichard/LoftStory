@@ -132,8 +132,12 @@ public class Loft implements ObjetDessinable {
 					// on lance la methode seComporter
 					// pour chaque Neuneu des cases du jeu
 					N.seComporter();
+					// on actualise
+					N.getCoord().getLoft().getAffichage().repaint();
 					// on met à jour la population du Loft
 					this.majPopulation();
+					// on actualise
+					N.getCoord().getLoft().getAffichage().repaint();
 				}
 			}
 		}
@@ -180,13 +184,17 @@ public class Loft implements ObjetDessinable {
 		// on recupere les coordonnees de la CaseLoft de ce Neuneu
 		int X = N.getCoordX();
 		int Y = N.getCoordY();
-		CaseLoft A = maison[X][Y];
-		// on enleve le Neuneu
-		A.retirerNeuneu(N);
-		// on le retire de l'affichage
-		this.affichage.retirerObjet(N);
-		// on met à jour la population du Loft
-		this.setPopulation(this.getPopulation() - 1);
+		// on s'assure que le Neuneu est bien dans le Loft
+		if (X >= 0 && Y >= 0) {
+			CaseLoft A = maison[X][Y];
+			// on enleve le Neuneu
+			A.retirerNeuneu(N);
+			// on le retire de l'affichage
+			this.affichage.retirerObjet(N);
+			// on met à jour la population du Loft
+			this.setPopulation(this.getPopulation() - 1);
+		}
+		// sinon il est déjà hors du Loft
 	}
 
 	/**
@@ -215,6 +223,7 @@ public class Loft implements ObjetDessinable {
 		for (Nourriture No : M) {
 			this.introduireNourriture(No);
 		}
+		this.getAffichage().repaint();
 	}
 
 	@Override

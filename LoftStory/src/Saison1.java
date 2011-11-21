@@ -8,8 +8,8 @@ public class Saison1 {
 	public void primeTime() throws InterruptedException {
 		
 		// initialisation du Loft
-		int hLoft = 5;
-		int lLoft = 5;
+		int hLoft = 25;
+		int lLoft = 25;
 		ZoneGraphique zone = new ZoneGraphique("Mon premier loft", lLoft, hLoft);
 		Loft loft1 = new Loft(lLoft, hLoft, zone);
 		zone.ajouterObjet(loft1);
@@ -19,7 +19,7 @@ public class Saison1 {
 		
 		// initialisation des Neuneus
 		LinkedList<Neuneu> L = new LinkedList<Neuneu>();
-		int nombreLofteurs = 4;
+		int nombreLofteurs = 10;
 		float proportionErratique = .6f;
 		float proportionVorace = .1f;
 		float proportionCannibale = .2f;
@@ -38,13 +38,13 @@ public class Saison1 {
 			L.add(e[i]);
 		}
 		
-		/*
+		
 		Vorace[] v = new Vorace[nombreVorace];
 		for (int j = 0; j < nombreVorace; j++) {
 			v[j] = new Vorace(j, EnergieParDefaut, EnergieParDefaut, false, X);
 			L.add(v[j]);
 		}
-		*/
+		
 
 		/*
 		Cannibale[] c = new Cannibale[nombreCannibale];

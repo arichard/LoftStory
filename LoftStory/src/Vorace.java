@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.Collections;
 import java.util.LinkedList;
 
 public class Vorace extends Neuneu {
@@ -58,22 +57,31 @@ public class Vorace extends Neuneu {
 		// si non il regarde la nourriture à proximité
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
+		double listeDistances[] = new double[8];
 		if (aMange == false) {
 			// liste la nourriture
-			LinkedList<Double> listeDistances = new LinkedList<Double>();
+			int i = 0;
 			for (CaseLoft C : listeCasesAdj) {
 				if (0 < C.getPresenceNourriture().size()) {
 					double distance = -Math.pow((this.getCoordX() - C.getX()),
 							2.0) - Math.pow((this.getCoordY() - C.getY()), 2.0);
-					listeDistances.add(distance);
+					listeDistances[i] = distance;
 				} else {
-					listeDistances.add(0.0);
+					listeDistances[i] = 0.0;
+				}
+				i++;
+			}
+
+			// calcul de la distance minimale
+			double distanceMini = 0.0;
+			int indiceDistanceMini = 0;
+			for (int m = 0; m < listeDistances.length; m++) {
+				if (listeDistances[m] > distanceMini) {
+					distanceMini = listeDistances[m];
+					indiceDistanceMini = m;
 				}
 			}
 
-			// calcul distance mini sur laquelle se trouve de la nourriture
-			Object obj = Collections.min(listeDistances);
-			Integer indiceDistanceMini = (Integer) obj;
 			// si la distance n'est pas nulle c'est qu'il y a de la nourriture
 			// donc le Neuneu mange
 			if (indiceDistanceMini < 0) {
