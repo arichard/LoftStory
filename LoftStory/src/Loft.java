@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
+import java.util.Random;
 
 //import sun.java2d.loops.DrawLine;
 
@@ -69,12 +70,19 @@ public class Loft implements ObjetDessinable {
 		this.tailleLoft = tailleLoft;
 	}
 
-	// mise à jour de la population de chaque case, vérifier si aucun Neuneu
+	public ZoneGraphique getAffichage() {
+		return affichage;
+	}
+
+	public void setAffichage(ZoneGraphique affichage) {
+		this.affichage = affichage;
+	}
+
+	// mise a jour de la population de chaque case, verifier si aucun Neuneu
 	// n'est mort
 	public void majPopulation() {
-
-		for (int i = 0; i < this.getW() - 1; i++) {
-			for (int j = 0; j < this.getH() - 1; j++) {
+		for (int i = 0; i < this.getW(); i++) {
+			for (int j = 0; j < this.getH(); j++) {
 				CaseLoft A = this.getMaison()[i][j];
 				LinkedList<Neuneu> L = new LinkedList<Neuneu>();
 				for (Neuneu N : A.getPopulationCase()) {
@@ -87,13 +95,11 @@ public class Loft implements ObjetDessinable {
 				}
 			}
 		}
-
 	}
 
 	public void lancerTourDeJeu() {
-
-		for (int i = 1; i < this.getW(); i++) {
-			for (int j = 1; j < this.getH(); j++) {
+		for (int i = 0; i < this.getW(); i++) {
+			for (int j = 0; j < this.getH(); j++) {
 				CaseLoft A = this.getMaison()[i][j];
 				// liste temporaire pour Žviter les
 				// "ConcurrentModificationException"
@@ -108,60 +114,53 @@ public class Loft implements ObjetDessinable {
 				}
 				for (Neuneu N : listeTemp) {
 					N.seComporter();
+					this.majPopulation();
 				}
 			}
 		}
-		this.majPopulation();
-
 	}
 
 	public void introduireNeuneu(Neuneu N) {
 
-		for (int i = 0; i < this.getW() - 1; i++) {
-			for (int j = 0; j < this.getH() - 1; j++) {
-				CaseLoft A = this.getMaison()[i][j];
-				if (A.getPopulationCase().size() < 1) {
-					A.ajouterNeuneu(N);
-					this.affichage.ajouterObjet(N);
-				}
+		boolean estInsere = false;
+		do {
+			Random randomX = new Random();
+			Random randomY = new Random();
+			CaseLoft A = this.getMaison()[randomX.nextInt(this.w)][randomY
+					.nextInt(this.h)];
+			if (A.getPopulationCase().size() < 1) {
+				A.ajouterNeuneu(N);
+				this.affichage.ajouterObjet(N);
+				estInsere = true;
 			}
-		}
-
-		this.majPopulation();
+		} while (estInsere == false);
 	}
 
 	public void virerNeuneu(Neuneu N) {
-
 		int X = N.getCoordX();
 		int Y = N.getCoordY();
 		CaseLoft A = maison[X][Y];
 		A.retirerNeuneu(N);
 		this.affichage.retirerObjet(N);
-		this.majPopulation();
-
+		// this.majPopulation();
 	}
-	
+
 	public void introduireNourriture(Nourriture N) {
-
-		for (int i = 0; i < this.getW() - 1; i++) {
-			for (int j = 0; j < this.getH() - 1; j++) {
-				CaseLoft A = this.getMaison()[i][j];
-					A.ajouterNourriture(N);
-					this.affichage.ajouterObjet(N);
-				
-			}
-		}
-
-		this.majPopulation();
+		Random randomX = new Random();
+		Random randomY = new Random();
+		CaseLoft A = this.getMaison()[randomX.nextInt(this.w)][randomY
+				.nextInt(this.h)];
+		A.ajouterNourriture(N);
+		this.affichage.ajouterObjet(N);
 	}
-	
 
 	// méthode de remplissage aléatoire du loft avec une liste donnée de Neuneus
-	public void remplissageAleatoire(LinkedList<Neuneu> L, LinkedList<Nourriture> M ) {
+	public void remplissageAleatoire(LinkedList<Neuneu> L,
+			LinkedList<Nourriture> M) {
 		for (Neuneu N : L) {
 			this.introduireNeuneu(N);
 		}
-		
+
 		for (Nourriture O : M) {
 			this.introduireNourriture(O);
 		}

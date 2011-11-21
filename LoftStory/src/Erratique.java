@@ -24,8 +24,8 @@ public class Erratique extends Neuneu {
 	 */
 	public void seReproduire(Neuneu N) {
 		// Reproduction = consommation d'énergie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 2);
-		N.setEnergie(N.getEnergie() - 2);
+		this.setEnergie(this.getEnergie() - 4);
+		N.setEnergie(N.getEnergie() - 4);
 
 		// Définition des attributs du bébé
 		int idBaby = 0;
@@ -38,7 +38,7 @@ public class Erratique extends Neuneu {
 		Erratique babyErratique = new Erratique(idBaby, energieBaby,
 				energieDefautBaby, presenceLoftBaby, coordBaby);
 		this.getCoord().getLoft().introduireNeuneu(babyErratique);
-		babyErratique.setCoord(this.getCoordX(), this.getCoordY());
+		//babyErratique.setCoord(this.getCoordX(), this.getCoordY());
 	}
 
 	/**
@@ -109,6 +109,8 @@ public class Erratique extends Neuneu {
 		if (aMange == false && aReprodui == false) {
 			this.seDeplacer();
 		}
+		
+		this.getCoord().getLoft().getAffichage().repaint();
 	}
 
 	@Override

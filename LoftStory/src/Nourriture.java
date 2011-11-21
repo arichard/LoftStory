@@ -10,10 +10,10 @@ public class Nourriture implements ObjetDessinable {
 	public Nourriture() {
 		this.type = "";
 		this.qteEnergetique = 0;
-		
+
 	}
 
-	public Nourriture(String type, int qteEnergetique, CaseLoft place) {
+	public Nourriture(String type, int qteEnergetique, CaseLoft coord) {
 		this.type = type;
 		this.qteEnergetique = qteEnergetique;
 		this.coord = coord;
@@ -35,11 +35,10 @@ public class Nourriture implements ObjetDessinable {
 		this.qteEnergetique = qteEnergetique;
 	}
 
-	
 	public CaseLoft getCoord() {
 		return coord;
 	}
-	
+
 	/**
 	 * Pour modifier les coordonnées de la nourriture
 	 */
@@ -61,16 +60,16 @@ public class Nourriture implements ObjetDessinable {
 	public int getCoordY() {
 		return getCoord().getY();
 	}
-	
+
 	@Override
 	public void dessinerObjet(Graphics g) {
 		// TODO Auto-generated method stub
-		
+
 		int taille = ZoneGraphique.TAILLE_CASELOFT;
 		g.setColor(Color.GREEN);
 		g.fillRect(this.getCoordX() * taille, this.getCoordY() * taille,
 				taille, taille);
-		
+
 	}
 
 }

@@ -4,9 +4,9 @@ import java.util.LinkedList;
 
 public class Saison1 {
 
-	public static int nombreLofteurs = 10;
-	public static int hLoft = 25;
-	public static int lLoft = 25;
+	public static int nombreLofteurs = 4;
+	public static int hLoft = 5;
+	public static int lLoft = 5;
 	public static float proportionErratique = .6f;
 	public static float proportionVorace = .1f;
 	public static float proportionCannibale = .2f;
@@ -14,12 +14,13 @@ public class Saison1 {
 
 	/**
 	 * @param args
+	 * @throws InterruptedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		new Saison1().primeTime();
 	}
 
-	public void primeTime() {
+	public void primeTime() throws InterruptedException {
 
 		LinkedList<Neuneu> L = new LinkedList<Neuneu>();
 		LinkedList<Nourriture> NourritureLoft = new LinkedList<Nourriture>();
@@ -33,7 +34,7 @@ public class Saison1 {
 		ZoneGraphique zone = new ZoneGraphique("Mon premier loft", lLoft, hLoft);
 		Loft loft1 = new Loft(lLoft, hLoft, zone);
 		zone.ajouterObjet(loft1);
-		CaseLoft X = new CaseLoft(-1, -1, loft1);
+		CaseLoft X = new CaseLoft(-10, -10, loft1);
 
 		//Création de la linkedList de nos Neuneus
 		Erratique[] e = new Erratique[nombreErratique];
@@ -42,26 +43,33 @@ public class Saison1 {
 					X);
 			L.add(e[i]);
 		}
-
+		
+		/*
 		Vorace[] v = new Vorace[nombreVorace];
 		for (int j = 0; j < nombreVorace; j++) {
 			v[j] = new Vorace(j, EnergieParDefaut, EnergieParDefaut, false, X);
 			L.add(v[j]);
 		}
+		*/
 
+		/*
 		Cannibale[] c = new Cannibale[nombreCannibale];
 		for (int k = 0; k < nombreCannibale; k++) {
 			c[k] = new Cannibale(k, EnergieParDefaut, EnergieParDefaut, false,
 					X);
 			L.add(c[k]);
 		}
+		*/
+		
 
+		/*
 		Lapin[] lap = new Lapin[nombreLapin];
 		for (int la = 0; la < nombreCannibale; la++) {
 			lap[la] = new Lapin(la, EnergieParDefaut, EnergieParDefaut, false,
 					X);
 			L.add(lap[la]);
 		}
+		*/
 		
 		// création de la liste de nourriture à ajouter
 		String[] typeNourriture = {"Viande", "Poisson", "Fruits", "Biscuits", "Légumes"};
@@ -74,8 +82,13 @@ public class Saison1 {
 		}
 
 		loft1.remplissageAleatoire(L, NourritureLoft);
+		Thread.sleep(5000);
 
-		loft1.lancerTourDeJeu();
+		for(int time=0; time<15; time++){
+			loft1.lancerTourDeJeu();
+			Thread.sleep(500);
+		};
+		System.out.println("Fin de la saison 1 !");
 
 		/*
 		 * LinkedList<Neuneu> M = new LinkedList<Neuneu>(); for (int i = 0; i <

@@ -1,5 +1,4 @@
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Random;
 
 public abstract class Neuneu implements ObjetDessinable {
 
@@ -96,23 +95,19 @@ public abstract class Neuneu implements ObjetDessinable {
 	protected void seDeplacer() {
 		// on choisit aléatoirement la case adjacente sur laquelle va aller le
 		// Neuneu
-		int mini = 1, maxi = this.getCoord().casesAdj().size() + 1;
-		int random = (int) (Math.random() * (maxi - mini)) + mini;
-
+		Random caseRandom = new Random();
+		int indiceCaseRandom = caseRandom.nextInt(this.getCoord().casesAdj().size());
 		// on va définir les nouvelles coordonnées du Neuneu
 		// en récupérant les coordonnées de la case choisie aléatoirement
-		int i = 0;
-		do {
-			i++;
-		} while (i < random);
-		this.setCoord(this.getCoord().casesAdj().get(i).getX(), this.getCoord()
-				.casesAdj().get(i).getY());
+		this.setCoord(this.getCoord().casesAdj().get(indiceCaseRandom).getX(), 
+				this.getCoord().casesAdj().get(indiceCaseRandom).getY());
 	}
 
 	/**
 	 * Pour l'action de manger de la nourriture des Neuneus
 	 */
 	protected void manger(CaseLoft C) {
+		/*
 		// choix de la nourriture ayant la plus grande quantité énergétique
 		LinkedList<Integer> listeQteEnergetique = new LinkedList<Integer>();
 		for (Nourriture N : C.getPresenceNourriture()) {
@@ -128,6 +123,13 @@ public abstract class Neuneu implements ObjetDessinable {
 		this.setEnergie(nouvelleEnergie);
 		// on enlève la nourriture mangée de la liste
 		C.getPresenceNourriture().remove(indiceQteEnergetiqueMax);
+		*/
+		int nouvelleEnergie = this.getEnergie()
+				+ C.getPresenceNourriture().get(0).getQteEnergetique();
+		this.setEnergie(nouvelleEnergie);
+		// on enlève la nourriture mangée de la liste
+		C.getPresenceNourriture().remove(0);
+		
 	}
 
 	/**
