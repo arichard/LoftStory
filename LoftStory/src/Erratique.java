@@ -19,22 +19,31 @@ public class Erratique extends Neuneu {
 	/**
 	 * (re)Definition de la classe seReproduire
 	 */
-	public void seReproduire(Neuneu N) {
-		// Reproduction = consommation d'energie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 5);
-		N.setEnergie(N.getEnergie() - 5);
+	public boolean seReproduire(Neuneu N) {
+		boolean aReprodui = false;
 
-		// Definition des attributs par defaut du bebe
-		int idBaby = 0;
-		int energieBaby = this.getEnergieDefaut();
-		int energieDefautBaby = this.getEnergieDefaut();
-		boolean presenceLoftBaby = false;
-		CaseLoft coordBaby = new CaseLoft(-10, -10, this.getCoord().getLoft());
+		// on verifie que le Neuneu a assez d'energie pour se reproduire
+		if (N.getEnergie() > 5) {
+			// Reproduction = consommation d'energie pour les Neuneus
+			this.setEnergie(this.getEnergie() - 5);
+			N.setEnergie(N.getEnergie() - 5);
 
-		// Instanciation du bebe
-		Erratique babyErratique = new Erratique(idBaby, energieBaby,
-				energieDefautBaby, presenceLoftBaby, coordBaby);
-		this.getCoord().getLoft().introduireNeuneu(babyErratique);
+			// Definition des attributs par defaut du bebe
+			int idBaby = 0;
+			int energieBaby = this.getEnergieDefaut();
+			int energieDefautBaby = this.getEnergieDefaut();
+			boolean presenceLoftBaby = false;
+			CaseLoft coordBaby = new CaseLoft(-10, -10, this.getCoord()
+					.getLoft());
+
+			// Instanciation du bebe
+			Erratique babyErratique = new Erratique(idBaby, energieBaby,
+					energieDefautBaby, presenceLoftBaby, coordBaby);
+			this.getCoord().getLoft().introduireNeuneu(babyErratique);
+			aReprodui = true;
+		}
+
+		return aReprodui;
 	}
 
 	/**
@@ -76,8 +85,8 @@ public class Erratique extends Neuneu {
 		if (aMange == false) {
 			// d'abord sur sa case
 			if (0 < this.getCoord().getPopulationCase().size()) {
-				this.seReproduire(this.getCoord().getPopulationCase().get(0));
-				aReprodui = true;
+				aReprodui = this.seReproduire(this.getCoord()
+						.getPopulationCase().get(0));
 				this.seDeplacer();
 			}
 			// sinon sur les cases adjacentes
@@ -87,9 +96,8 @@ public class Erratique extends Neuneu {
 					if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 							&& aReprodui == false) {
 						// le Neuneu se reproduit
-						this.seReproduire(listeCasesAdj.get(k)
+						aReprodui = this.seReproduire(listeCasesAdj.get(k)
 								.getPopulationCase().get(0));
-						aReprodui = true;
 						// le Neuneu se deplace sur la case sur laquelle il
 						// vient de
 						// se reproduire

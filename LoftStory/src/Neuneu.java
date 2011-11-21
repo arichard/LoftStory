@@ -124,7 +124,7 @@ public abstract class Neuneu implements ObjetDessinable {
 	 * Methode abstraite pour la reproduction redefinie pour chaque type de
 	 * Neuneu pour creer un type de Neuneu adequat en tant que bebe
 	 */
-	abstract void seReproduire(Neuneu N);
+	abstract boolean seReproduire(Neuneu N);
 
 	/**
 	 * Methode abstraite pour le comportement redefinie pour chaque type de

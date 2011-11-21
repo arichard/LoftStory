@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Vorace extends Neuneu {
 
 	/**
-	 * Constructeur par défaut
+	 * Constructeur par defaut
 	 */
 	public Vorace() {
 		super();
@@ -20,41 +20,51 @@ public class Vorace extends Neuneu {
 	}
 
 	/**
-	 * (re)Définition de la classe seReproduire
+	 * (re)Definition de la classe seReproduire
 	 */
-	public void seReproduire(Neuneu N) {
-		// Reproduction = consommation d'énergie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 4);
-		N.setEnergie(N.getEnergie() - 4);
-		// Définition des attributs du bébé
-		int idBaby = 0;
-		int energieBaby = this.getEnergieDefaut();
-		int energieDefautBaby = this.getEnergieDefaut();
-		boolean presenceLoftBaby = false;
-		CaseLoft coordBaby = new CaseLoft(-1, -1, this.getCoord().getLoft());
-		// Instanciation du bébé
-		Vorace babyVorace = new Vorace(idBaby, energieBaby, energieDefautBaby,
-				presenceLoftBaby, coordBaby);
-		this.getCoord().getLoft().introduireNeuneu(babyVorace);
-		babyVorace.setCoord(this.getCoordX(), this.getCoordY());
+	public boolean seReproduire(Neuneu N) {
+		boolean aReprodui = false;
+
+		// on verifie que le Neuneu a assez d'energie pour se reproduire
+		if (N.getEnergie() > 5) {
+			// Reproduction = consommation d'energie pour les Neuneus
+			this.setEnergie(this.getEnergie() - 5);
+			N.setEnergie(N.getEnergie() - 5);
+
+			// Definition des attributs du bebe
+			int idBaby = 0;
+			int energieBaby = this.getEnergieDefaut();
+			int energieDefautBaby = this.getEnergieDefaut();
+			boolean presenceLoftBaby = false;
+			CaseLoft coordBaby = new CaseLoft(-10, -10, this.getCoord()
+					.getLoft());
+
+			// Instanciation du bebe
+			Vorace babyVorace = new Vorace(idBaby, energieBaby,
+					energieDefautBaby, presenceLoftBaby, coordBaby);
+			this.getCoord().getLoft().introduireNeuneu(babyVorace);
+			aReprodui = true;
+		}
+
+		return aReprodui;
 	}
 
 	/**
-	 * (re)Définition de la classe seComporter
+	 * (re)Definition de la classe seComporter
 	 */
 	public void seComporter() {
-		// instanciation des variables nécessaires
+		// instanciation des variables necessaires
 		boolean aMange = false, aReprodui = false;
 
 		// il regarde d'abord s'il y a de la nourriture sur sa case
-		// si oui il mange et se déplace
+		// si oui il mange et se deplace
 		if (0 < this.getCoord().getPresenceNourriture().size()) {
 			this.manger(this.getCoord());
 			aMange = true;
 			this.seDeplacer();
 		}
 
-		// si non il regarde la nourriture à proximité
+		// si non il regarde la nourriture a proximite
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
 		double listeDistances[] = new double[8];
@@ -87,19 +97,19 @@ public class Vorace extends Neuneu {
 			if (indiceDistanceMini < 0) {
 				this.manger(listeCasesAdj.get(indiceDistanceMini));
 				aMange = true;
-				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// le Neuneu se deplace sur la case sur laquelle il vient de
 				// manger
 				this.setCoord(listeCasesAdj.get(indiceDistanceMini).getX(),
 						listeCasesAdj.get(indiceDistanceMini).getY());
 			}
 		}
 
-		// s'il n'a pas mangé, il va chercher à se reproduire
+		// s'il n'a pas mange, il va chercher a se reproduire
 		if (aMange == false) {
 			// d'abord sur sa case
 			if (0 < this.getCoord().getPopulationCase().size()) {
-				this.seReproduire(this.getCoord().getPopulationCase().get(0));
-				aReprodui = true;
+				aReprodui = this.seReproduire(this.getCoord()
+						.getPopulationCase().get(0));
 				this.seDeplacer();
 			}
 			// sinon sur les cases adjacentes
@@ -109,12 +119,10 @@ public class Vorace extends Neuneu {
 					if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 							&& aReprodui == false) {
 						// le Neuneu se reproduit
-						this.seReproduire(listeCasesAdj.get(k)
+						aReprodui = this.seReproduire(listeCasesAdj.get(k)
 								.getPopulationCase().get(0));
-						aReprodui = true;
-						// le Neuneu se déplace sur la case sur laquelle il
-						// vient de
-						// se reproduire
+						// le Neuneu se deplace sur la case sur laquelle il
+						// vient de se reproduire
 						this.setCoord(listeCasesAdj.get(k).getX(),
 								listeCasesAdj.get(k).getY());
 					}
@@ -123,7 +131,7 @@ public class Vorace extends Neuneu {
 			}
 		}
 
-		// s'il n'a ni mangé ni ne s'est reproduit, il se déplace
+		// s'il n'a ni mange ni ne s'est reproduit, il se deplace
 		if (aMange == false && aReprodui == false) {
 			this.seDeplacer();
 		}

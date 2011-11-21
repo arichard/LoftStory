@@ -51,15 +51,12 @@ public class Saison1 {
 			L.add(c[k]);
 		}
 		
-
-		/*
-		Lapin[] lap = new Lapin[nombreLapin];
-		for (int la = 0; la < nombreCannibale; la++) {
-			lap[la] = new Lapin(la, EnergieParDefaut, EnergieParDefaut, false,
+		Lapin[] lapin = new Lapin[nombreLapin];
+		for (int l = 0; l < nombreLapin; l++) {
+			lapin[l] = new Lapin(l, EnergieParDefaut, EnergieParDefaut, false,
 					X);
-			L.add(lap[la]);
+			L.add(lapin[l]);
 		}
-		*/
 		
 		// initialisation de la Nourriture
 		LinkedList<Nourriture> NourritureLoft = new LinkedList<Nourriture>();

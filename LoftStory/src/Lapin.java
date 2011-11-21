@@ -5,7 +5,7 @@ import java.util.LinkedList;
 public class Lapin extends Neuneu {
 
 	/**
-	 * Constructeur par défaut
+	 * Constructeur par defaut
 	 */
 	public Lapin() {
 		super();
@@ -20,37 +20,47 @@ public class Lapin extends Neuneu {
 	}
 
 	/**
-	 * (re)Définition de la classe seReproduire
+	 * (re)Definition de la classe seReproduire
 	 */
-	public void seReproduire(Neuneu N) {
-		// Reproduction = consommation d'énergie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 4);
-		N.setEnergie(N.getEnergie() - 4);
-		// Définition des attributs du bébé
-		int idBaby = 0;
-		int energieBaby = this.getEnergieDefaut();
-		int energieDefautBaby = this.getEnergieDefaut();
-		boolean presenceLoftBaby = false;
-		CaseLoft coordBaby = new CaseLoft(-1, -1, this.getCoord().getLoft());
-		// Instanciation du bébé
-		Lapin babyLapin = new Lapin(idBaby, energieBaby, energieDefautBaby,
-				presenceLoftBaby, coordBaby);
-		this.getCoord().getLoft().introduireNeuneu(babyLapin);
-		babyLapin.setCoord(this.getCoordX(), this.getCoordY());
+	public boolean seReproduire(Neuneu N) {
+		boolean aReprodui = false;
+
+		// on verifie que le Neuneu a assez d'energie pour se reproduire
+		if (N.getEnergie() > 5) {
+			// Reproduction = consommation d'energie pour les Neuneus
+			this.setEnergie(this.getEnergie() - 5);
+			N.setEnergie(N.getEnergie() - 5);
+
+			// Definition des attributs du bebe
+			int idBaby = 0;
+			int energieBaby = this.getEnergieDefaut();
+			int energieDefautBaby = this.getEnergieDefaut();
+			boolean presenceLoftBaby = false;
+			CaseLoft coordBaby = new CaseLoft(-10, -10, this.getCoord()
+					.getLoft());
+
+			// Instanciation du bebe
+			Lapin babyLapin = new Lapin(idBaby, energieBaby, energieDefautBaby,
+					presenceLoftBaby, coordBaby);
+			this.getCoord().getLoft().introduireNeuneu(babyLapin);
+			aReprodui = true;
+		}
+
+		return aReprodui;
 	}
 
 	/**
-	 * (re)Définition de la classe seComporter
+	 * (re)Definition de la classe seComporter
 	 */
 	public void seComporter() {
-		// instanciation des variables nécessaires
+		// instanciation des variables necessaires
 		boolean aMange = false, aReprodui = false;
 
 		// il regarde d'abord s'il y a un Neuneu sur sa case
-		// si oui il se reproduit et se déplace
+		// si oui il se reproduit et se deplace
 		if (0 < this.getCoord().getPopulationCase().size()) {
-			this.seReproduire(this.getCoord().getPopulationCase().get(0));
-			aReprodui = true;
+			aReprodui = this.seReproduire(this.getCoord().getPopulationCase()
+					.get(0));
 			this.seDeplacer();
 		}
 
@@ -63,10 +73,9 @@ public class Lapin extends Neuneu {
 				if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 						&& aReprodui == false) {
 					// le Neuneu se reproduit
-					this.seReproduire(listeCasesAdj.get(k).getPopulationCase()
-							.get(0));
-					aReprodui = true;
-					// le Neuneu se déplace sur la case sur laquelle il vient de
+					aReprodui = this.seReproduire(listeCasesAdj.get(k)
+							.getPopulationCase().get(0));
+					// le Neuneu se deplace sur la case sur laquelle il vient de
 					// se reproduire
 					this.setCoord(listeCasesAdj.get(k).getX(), listeCasesAdj
 							.get(k).getY());
@@ -75,7 +84,7 @@ public class Lapin extends Neuneu {
 			k++;
 		}
 
-		// s'il ne s'est pas reprodui, il va chercher à manger
+		// s'il ne s'est pas reprodui, il va chercher a manger
 		if (aReprodui == false) {
 			// d'abord sur sa case
 			if (0 < this.getCoord().getPresenceNourriture().size()) {
@@ -93,9 +102,8 @@ public class Lapin extends Neuneu {
 						// le Neuneu mange
 						this.manger(listeCasesAdj.get(i));
 						aMange = true;
-						// le Neuneu se déplace sur la case sur laquelle il
-						// vient de
-						// manger
+						// le Neuneu se deplace sur la case sur laquelle il
+						// vient de manger
 						this.setCoord(listeCasesAdj.get(i).getX(),
 								listeCasesAdj.get(i).getY());
 					}
@@ -104,7 +112,7 @@ public class Lapin extends Neuneu {
 			}
 		}
 
-		// s'il n'a ni mangé ni ne s'est reproduit, il se déplace
+		// s'il n'a ni mange ni ne s'est reproduit, il se deplace
 		if (aMange == false && aReprodui == false) {
 			this.seDeplacer();
 		}

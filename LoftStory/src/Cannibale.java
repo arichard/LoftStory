@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class Cannibale extends Neuneu {
 
 	/**
-	 * Constructeur par défaut
+	 * Constructeur par defaut
 	 */
 	public Cannibale() {
 		super();
@@ -21,34 +21,44 @@ public class Cannibale extends Neuneu {
 	}
 
 	/**
-	 * (re)Définition de la classe seReproduire
+	 * (re)Definition de la classe seReproduire
 	 */
-	public void seReproduire(Neuneu N) {
-		// Reproduction = consommation d'énergie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 4);
-		N.setEnergie(N.getEnergie() - 4);
-		// Définition des attributs du bébé
-		int idBaby = 0;
-		int energieBaby = this.getEnergieDefaut();
-		int energieDefautBaby = this.getEnergieDefaut();
-		boolean presenceLoftBaby = false;
-		CaseLoft coordBaby = new CaseLoft(-1, -1, this.getCoord().getLoft());
-		// Instanciation du bébé
-		Cannibale babyCannibale = new Cannibale(idBaby, energieBaby,
-				energieDefautBaby, presenceLoftBaby, coordBaby);
-		this.getCoord().getLoft().introduireNeuneu(babyCannibale);
-		babyCannibale.setCoord(this.getCoordX(), this.getCoordY());
+	public boolean seReproduire(Neuneu N) {
+		boolean aReprodui = false;
+
+		// on verifie que le Neuneu a assez d'energie pour se reproduire
+		if (N.getEnergie() > 5) {
+			// Reproduction = consommation d'energie pour les Neuneus
+			this.setEnergie(this.getEnergie() - 5);
+			N.setEnergie(N.getEnergie() - 5);
+
+			// Definition des attributs du bebe
+			int idBaby = 0;
+			int energieBaby = this.getEnergieDefaut();
+			int energieDefautBaby = this.getEnergieDefaut();
+			boolean presenceLoftBaby = false;
+			CaseLoft coordBaby = new CaseLoft(-10, -10, this.getCoord()
+					.getLoft());
+
+			// Instanciation du bebe
+			Cannibale babyCannibale = new Cannibale(idBaby, energieBaby,
+					energieDefautBaby, presenceLoftBaby, coordBaby);
+			this.getCoord().getLoft().introduireNeuneu(babyCannibale);
+			aReprodui = true;
+		}
+
+		return aReprodui;
 	}
 
 	/**
-	 * (re)Définition de la classe seComporter
+	 * (re)Definition de la classe seComporter
 	 */
 	public void seComporter() {
-		// instanciation des variables nécessaires
+		// instanciation des variables necessaires
 		boolean aMange = false, aReprodui = false;
 
 		// il regarde d'abord s'il y a Nourriture/Neuneu sur sa case
-		// si oui il mange et se déplace
+		// si oui il mange et se deplace
 		if (0 < this.getCoord().getPresenceNourriture().size()
 				&& 0 < this.getCoord().getPopulationCase().size()) {
 			this.manger(this.getCoord());
@@ -71,34 +81,34 @@ public class Cannibale extends Neuneu {
 		LinkedList<CaseLoft> listeCasesAdj = new LinkedList<CaseLoft>();
 		listeCasesAdj = this.getCoord().casesAdj();
 		if (aMange == false) {
-			
-			// liste la nourriture et les neuneus à proximité
+
+			// liste la nourriture et les neuneus a proximite
 			double listeDistancesNourriture[] = new double[8];
 			double listeDistancesNeuneu[] = new double[8];
-			int i=0;
+			int i = 0;
 			for (CaseLoft C : listeCasesAdj) {
 				double distance = -Math.pow((this.getCoordX() - C.getX()), 2.0)
 						- Math.pow((this.getCoordY() - C.getY()), 2.0);
 				if (0 < C.getPresenceNourriture().size()
 						&& 0 < C.getPopulationCase().size()) {
-					listeDistancesNourriture[i]=distance;
-					listeDistancesNeuneu[i]=distance;
+					listeDistancesNourriture[i] = distance;
+					listeDistancesNeuneu[i] = distance;
 				} else if (0 < C.getPresenceNourriture().size()) {
-					listeDistancesNourriture[i]=distance;
-					listeDistancesNeuneu[i]=0.0;
+					listeDistancesNourriture[i] = distance;
+					listeDistancesNeuneu[i] = 0.0;
 				} else if (0 < C.getPopulationCase().size()) {
-					listeDistancesNourriture[i]=0.0;
-					listeDistancesNeuneu[i]=distance;
+					listeDistancesNourriture[i] = 0.0;
+					listeDistancesNeuneu[i] = distance;
 				} else {
-					listeDistancesNourriture[i]=0.0;
-					listeDistancesNeuneu[i]=0.0;
+					listeDistancesNourriture[i] = 0.0;
+					listeDistancesNeuneu[i] = 0.0;
 				}
 				i++;
 			}
 
 			// calcul des distances minimales
 			double distanceMiniNourriture = 0.0, distanceMiniNeuneu = 0.0;
-			int indiceDistanceMiniNourriture = 0, indiceDistanceMiniNeuneu=0;
+			int indiceDistanceMiniNourriture = 0, indiceDistanceMiniNeuneu = 0;
 			for (int m = 0; m < listeDistancesNourriture.length; m++) {
 				if (listeDistancesNourriture[m] > distanceMiniNourriture) {
 					distanceMiniNourriture = listeDistancesNourriture[m];
@@ -111,36 +121,36 @@ public class Cannibale extends Neuneu {
 					indiceDistanceMiniNeuneu = p;
 				}
 			}
-			
-			// cas Nourriture présente et Nourriture plus proche que Neuneu
+
+			// cas Nourriture presente et Nourriture plus proche que Neuneu
 			if (indiceDistanceMiniNourriture < 0
 					&& indiceDistanceMiniNourriture < indiceDistanceMiniNeuneu) {
 				this.manger(listeCasesAdj.get(indiceDistanceMiniNourriture));
 				aMange = true;
-				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// le Neuneu se deplace sur la case sur laquelle il vient de
 				// manger
 				this.setCoord(listeCasesAdj.get(indiceDistanceMiniNourriture)
 						.getX(), listeCasesAdj
 						.get(indiceDistanceMiniNourriture).getY());
 			}
-			// cas Neuneu présent et Neuneu plus proche que Nourriture
+			// cas Neuneu present et Neuneu plus proche que Nourriture
 			else if (indiceDistanceMiniNeuneu < 0
 					&& indiceDistanceMiniNeuneu < indiceDistanceMiniNourriture) {
 				this.mangerNeuneu(listeCasesAdj.get(indiceDistanceMiniNeuneu));
 				aMange = true;
-				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// le Neuneu se deplace sur la case sur laquelle il vient de
 				// manger
 				this.setCoord(listeCasesAdj.get(indiceDistanceMiniNeuneu)
 						.getX(), listeCasesAdj.get(indiceDistanceMiniNeuneu)
 						.getY());
 			}
-			// cas Neuneu présent et Nourriture présent à égale distance
+			// cas Neuneu present et Nourriture present a egale distance
 			else if (indiceDistanceMiniNeuneu < 0
 					&& indiceDistanceMiniNeuneu == indiceDistanceMiniNourriture) {
 				this.manger(listeCasesAdj.get(indiceDistanceMiniNourriture));
 				this.mangerNeuneu(listeCasesAdj.get(indiceDistanceMiniNeuneu));
 				aMange = true;
-				// le Neuneu se déplace sur la case sur laquelle il vient de
+				// le Neuneu se deplace sur la case sur laquelle il vient de
 				// manger
 				this.setCoord(listeCasesAdj.get(indiceDistanceMiniNeuneu)
 						.getX(), listeCasesAdj.get(indiceDistanceMiniNeuneu)
@@ -148,12 +158,12 @@ public class Cannibale extends Neuneu {
 			}
 		}
 
-		// s'il n'a pas mangé, il va chercher à se reproduire
+		// s'il n'a pas mange, il va chercher a se reproduire
 		if (aMange == false) {
 			// d'abord sur sa case
 			if (0 < this.getCoord().getPopulationCase().size()) {
-				this.seReproduire(this.getCoord().getPopulationCase().get(0));
-				aReprodui = true;
+				aReprodui = this.seReproduire(this.getCoord()
+						.getPopulationCase().get(0));
 				this.seDeplacer();
 			}
 			// sinon sur les cases adjacentes
@@ -163,10 +173,9 @@ public class Cannibale extends Neuneu {
 					if (0 < listeCasesAdj.get(k).getPopulationCase().size()
 							&& aReprodui == false) {
 						// le Neuneu se reproduit
-						this.seReproduire(listeCasesAdj.get(k)
+						aReprodui = this.seReproduire(listeCasesAdj.get(k)
 								.getPopulationCase().get(0));
-						aReprodui = true;
-						// le Neuneu se déplace sur la case sur laquelle il
+						// le Neuneu se deplace sur la case sur laquelle il
 						// vient de
 						// se reproduire
 						this.setCoord(listeCasesAdj.get(k).getX(),
@@ -177,17 +186,17 @@ public class Cannibale extends Neuneu {
 			}
 		}
 
-		// s'il n'a ni mangé ni ne s'est reproduit, il se déplace
+		// s'il n'a ni mange ni ne s'est reproduit, il se deplace
 		if (aMange == false && aReprodui == false) {
 			this.seDeplacer();
 		}
 	}
 
 	/**
-	 * Nouvelle méthode mangerNeuneu définie pour le Cannibale
+	 * Nouvelle methode mangerNeuneu definie pour le Cannibale
 	 */
 	public void mangerNeuneu(CaseLoft C) {
-		// choix du Neuneu ayant la plus grande quantité énergétique
+		// choix du Neuneu ayant la plus grande quantite energetique
 		LinkedList<Integer> listeEnergie = new LinkedList<Integer>();
 		for (Neuneu N : C.getPopulationCase()) {
 			listeEnergie.add(N.getEnergie());
@@ -195,11 +204,11 @@ public class Cannibale extends Neuneu {
 		Object obj = Collections.min(listeEnergie);
 		Integer indiceEnergieMax = (Integer) obj;
 
-		// on ajoute l'énergie du Neuneu choisi au Cannibale
+		// on ajoute l'energie du Neuneu choisi au Cannibale
 		int nouvelleEnergie = this.getEnergie()
 				+ C.getPopulationCase().get(indiceEnergieMax).getEnergie();
 		this.setEnergie(nouvelleEnergie);
-		// on enlève le Neuneu ainsi mangé du Loft
+		// on enleve le Neuneu ainsi mange du Loft
 		C.getLoft().virerNeuneu(C.getPopulationCase().get(indiceEnergieMax));
 	}
 
