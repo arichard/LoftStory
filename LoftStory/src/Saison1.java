@@ -28,6 +28,10 @@ public class Saison1 {
 		int nombreVorace = (int) (nombreLofteurs * proportionVorace);
 		int nombreCannibale = (int) (nombreLofteurs * proportionCannibale);
 		int nombreLapin = (int) (nombreLofteurs * proportionLapin);
+		System.out.println("Cannibales : " + nombreCannibale);
+		System.out.println("Erratiques : " + nombreErratique);
+		System.out.println("Lapins : " + nombreLapin);
+		System.out.println("Voraces : " + nombreVorace);
 
 		ZoneGraphique zone = new ZoneGraphique("Mon premier loft", lLoft, hLoft);
 		Loft loft1 = new Loft(lLoft, hLoft, zone);
@@ -36,27 +40,29 @@ public class Saison1 {
 
 		//
 		Erratique[] e = new Erratique[nombreErratique];
-		for (int i = 1; i < nombreErratique; i++) {
-			e[i - 1] = new Erratique(i, 10, EnergieParDefaut, false, X);
-			L.add(e[i - 1]);
+		for (int i = 0; i < nombreErratique; i++) {
+			e[i] = new Erratique(i, EnergieParDefaut, EnergieParDefaut, false,
+					X);
+			L.add(e[i]);
 		}
 
 		Vorace[] v = new Vorace[nombreVorace];
-		for (int j = 1; j < nombreVorace; j++) {
-			v[j - 1] = new Vorace(j, 10, EnergieParDefaut, false, X);
-			L.add(v[j - 1]);
+		for (int j = 0; j < nombreVorace; j++) {
+			v[j] = new Vorace(j, EnergieParDefaut, EnergieParDefaut, false, X);
+			L.add(v[j]);
 		}
 
 		Cannibale[] c = new Cannibale[nombreCannibale];
-		for (int k = 1; k < nombreCannibale; k++) {
-			c[k - 1] = new Cannibale(k, 10, EnergieParDefaut, false, X);
-			L.add(c[k - 1]);
+		for (int k = 0; k < nombreCannibale; k++) {
+			c[k] = new Cannibale(k, EnergieParDefaut, EnergieParDefaut, false,
+					X);
+			L.add(c[k]);
 		}
 
 		Lapin[] la = new Lapin[nombreLapin];
-		for (int l = 1; l < nombreCannibale; l++) {
-			la[l - 1] = new Lapin(l, 10, EnergieParDefaut, false, X);
-			L.add(la[l - 1]);
+		for (int l = 0; l < nombreCannibale; l++) {
+			la[l] = new Lapin(l, EnergieParDefaut, EnergieParDefaut, false, X);
+			L.add(la[l]);
 		}
 
 		loft1.remplissageAleatoire(L);

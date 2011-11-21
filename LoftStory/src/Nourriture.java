@@ -1,15 +1,16 @@
+import java.awt.Color;
+import java.awt.Graphics;
 
 public class Nourriture {
 
 	protected String type;
 	protected int qteEnergetique;
-	
-	
+
 	public Nourriture() {
 		this.type = "";
 		this.qteEnergetique = 0;
 	}
-	
+
 	public Nourriture(String type, int qteEnergetique) {
 		this.type = type;
 		this.qteEnergetique = qteEnergetique;
@@ -30,6 +31,5 @@ public class Nourriture {
 	public void setQteEnergetique(int qteEnergetique) {
 		this.qteEnergetique = qteEnergetique;
 	}
-	
-		
+
 }
