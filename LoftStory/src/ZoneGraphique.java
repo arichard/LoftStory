@@ -1,10 +1,7 @@
-//package com.objet.lofteurs;
-
 import java.awt.HeadlessException;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.LinkedList;
-
 import javax.swing.JFrame;
 
 /**

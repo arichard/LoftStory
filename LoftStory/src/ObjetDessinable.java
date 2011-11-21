@@ -1,20 +1,12 @@
-/**
- * 
- */
-//package com.objet.lofteurs;
-
 import java.awt.Graphics;
 
 /**
- * interface des objets dessinables ; ils devront simplement implanter une méthode de dessin
- * à partir d'un contexte graphique passé par l'application
- * 
- * @author moreau
- *
+ * interface des objets dessinables ; ils devront simplement implanter une methode de dessin
+ * a partir d'un contexte graphique passe par l'application
  */
 public interface ObjetDessinable {
 	/**
-	 * fonction de dessin ; à surcharger
+	 * fonction de dessin ; a surcharger
 	 * @param g le contexte graphique
 	 */
 	public void dessinerObjet(Graphics g);

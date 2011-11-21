@@ -74,10 +74,10 @@ public class Saison1 {
 
 		// remplissage du Loft avec les Neuneus et la Nourriture
 		loft1.remplissageAleatoire(L, NourritureLoft);
-		Thread.sleep(5000);
+		Thread.sleep(2000);
 
 		// lancement des tours de jeu
-		for(int time=0; time<15; time++){
+		for(int time=0; time<20; time++){
 			loft1.lancerTourDeJeu();
 			Thread.sleep(500);
 		};
