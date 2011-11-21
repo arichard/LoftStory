@@ -2,7 +2,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.LinkedList;
 
-import sun.java2d.loops.DrawLine;
+//import sun.java2d.loops.DrawLine;
 
 public class Loft implements ObjetDessinable {
 
@@ -140,11 +140,30 @@ public class Loft implements ObjetDessinable {
 		this.majPopulation();
 
 	}
+	
+	public void introduireNourriture(Nourriture N) {
+
+		for (int i = 0; i < this.getW() - 1; i++) {
+			for (int j = 0; j < this.getH() - 1; j++) {
+				CaseLoft A = this.getMaison()[i][j];
+					A.ajouterNourriture(N);
+					this.affichage.ajouterObjet(N);
+				
+			}
+		}
+
+		this.majPopulation();
+	}
+	
 
 	// méthode de remplissage aléatoire du loft avec une liste donnée de Neuneus
-	public void remplissageAleatoire(LinkedList<Neuneu> L) {
+	public void remplissageAleatoire(LinkedList<Neuneu> L, LinkedList<Nourriture> M ) {
 		for (Neuneu N : L) {
 			this.introduireNeuneu(N);
+		}
+		
+		for (Nourriture O : M) {
+			this.introduireNourriture(O);
 		}
 	}
 

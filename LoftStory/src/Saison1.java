@@ -22,23 +22,20 @@ public class Saison1 {
 	public void primeTime() {
 
 		LinkedList<Neuneu> L = new LinkedList<Neuneu>();
+		LinkedList<Nourriture> NourritureLoft = new LinkedList<Nourriture>();
 		int EnergieParDefaut = 10;
-
 		int nombreErratique = (int) (nombreLofteurs * proportionErratique);
 		int nombreVorace = (int) (nombreLofteurs * proportionVorace);
 		int nombreCannibale = (int) (nombreLofteurs * proportionCannibale);
 		int nombreLapin = (int) (nombreLofteurs * proportionLapin);
-		System.out.println("Cannibales : " + nombreCannibale);
-		System.out.println("Erratiques : " + nombreErratique);
-		System.out.println("Lapins : " + nombreLapin);
-		System.out.println("Voraces : " + nombreVorace);
+		int quantiteNourriture = (nombreErratique + nombreVorace + nombreCannibale + nombreLapin)*2;
 
 		ZoneGraphique zone = new ZoneGraphique("Mon premier loft", lLoft, hLoft);
 		Loft loft1 = new Loft(lLoft, hLoft, zone);
 		zone.ajouterObjet(loft1);
 		CaseLoft X = new CaseLoft(-1, -1, loft1);
 
-		//
+		//Création de la linkedList de nos Neuneus
 		Erratique[] e = new Erratique[nombreErratique];
 		for (int i = 0; i < nombreErratique; i++) {
 			e[i] = new Erratique(i, EnergieParDefaut, EnergieParDefaut, false,
@@ -59,23 +56,26 @@ public class Saison1 {
 			L.add(c[k]);
 		}
 
-		Lapin[] la = new Lapin[nombreLapin];
-		for (int l = 0; l < nombreCannibale; l++) {
-			la[l] = new Lapin(l, EnergieParDefaut, EnergieParDefaut, false, X);
-			L.add(la[l]);
+		Lapin[] lap = new Lapin[nombreLapin];
+		for (int la = 0; la < nombreCannibale; la++) {
+			lap[la] = new Lapin(la, EnergieParDefaut, EnergieParDefaut, false,
+					X);
+			L.add(lap[la]);
+		}
+		
+		// création de la liste de nourriture à ajouter
+		String[] typeNourriture = {"Viande", "Poisson", "Fruits", "Biscuits", "Légumes"};
+		int[] qteEnergieNourriture = {15,10,10,3,12};
+		Nourriture[] bouffe = new Nourriture[quantiteNourriture];
+		for (int b = 0; b < quantiteNourriture; b++) {
+			int random = (int) (Math.random() * (5 - 1)) + 1;
+			bouffe[b] = new Nourriture(typeNourriture[random], qteEnergieNourriture[random], X);
+			NourritureLoft.add(bouffe[b]);
 		}
 
-		loft1.remplissageAleatoire(L);
+		loft1.remplissageAleatoire(L, NourritureLoft);
 
-		/*
-		 * for (Neuneu n : L) { zone.ajouterObjet(n); }
-		 */
-
-		// lancement d'un nombre limité de tours de jeu
-		for (int i = 0; i < 10000; i++) {
-			loft1.lancerTourDeJeu();
-		}
-		System.out.println("Fin du Loft Saison 1 !");
+		loft1.lancerTourDeJeu();
 
 		/*
 		 * LinkedList<Neuneu> M = new LinkedList<Neuneu>(); for (int i = 0; i <

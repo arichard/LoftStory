@@ -77,11 +77,15 @@ public class CaseLoft {
 
 	public void ajouterNourriture(Nourriture N) {
 		presenceNourriture.add(N);
+		// on met à jour ses coordonnées
+		N.setCoord(this.getX(), this.getY());
 
 	}
 
 	public void retirerNourriture(Nourriture N) {
 		presenceNourriture.remove(N);
+		// on met à jour les coordonnées du Neuneu
+		N.setCoord(-1, -1);
 
 	}
 
