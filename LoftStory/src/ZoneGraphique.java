@@ -9,40 +9,34 @@ import javax.swing.JFrame;
 
 /**
  * une classe comportant une zone graphique dans laquelle on peut dessiner ; le
- * dessin est refait automatiquement par la classe Panel associée ; tous les
- * objets de type ObjetDessinable ajoutés à la liste sont redessinés par un
- * appel à leur méthode dessinerObjet(Graphics g)
- * 
- * @see ObjectDessinable,LoftPanel
- * @author moreau
- * 
+ * dessin est refait automatiquement par la classe Panel associee ; tous les
+ * objets de type ObjetDessinable ajoutes a la liste sont redessines par un
+ * appel a leur methode dessinerObjet(Graphics g)
  */
 public class ZoneGraphique extends JFrame {
 
 	/**
-	 * la liste d'objets à dessiner
+	 * la liste d'objets a dessiner
 	 */
 	LinkedList<ObjetDessinable> liste;
 
 	/**
-	 * dŽfinition par une constante de la taille d'une CaseLoft
+	 * definition par une constante de la taille d'une CaseLoft
 	 */
 	public static final int TAILLE_CASELOFT = 15;
 
 	/**
-	 * constructeur
-	 * 
-	 * @param titre
-	 *            le nom de l'application
+	 * Constructeur
 	 */
 	public ZoneGraphique(String titre, int lLoft, int hLoft) {
 		// appel au constructeur de base
 		super(titre);
 
-		// ajout d'une taille par défaut
-		setSize(lLoft * TAILLE_CASELOFT + TAILLE_CASELOFT, hLoft * TAILLE_CASELOFT + TAILLE_CASELOFT);
+		// ajout d'une taille par defaut
+		setSize(lLoft * TAILLE_CASELOFT + TAILLE_CASELOFT, hLoft
+				* TAILLE_CASELOFT + TAILLE_CASELOFT);
 
-		// création de la liste d'objets
+		// creation de la liste d'objets
 		liste = new LinkedList<ObjetDessinable>();
 
 		// ajout d'un listener
@@ -52,7 +46,7 @@ public class ZoneGraphique extends JFrame {
 			}
 		});
 
-		// création du panneau
+		// creation du panneau
 		LoftPanel a = new LoftPanel(liste);
 		getContentPane().add(a);
 
@@ -61,7 +55,6 @@ public class ZoneGraphique extends JFrame {
 
 	public ZoneGraphique() throws HeadlessException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	/**

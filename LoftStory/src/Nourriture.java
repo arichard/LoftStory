@@ -10,7 +10,7 @@ public class Nourriture implements ObjetDessinable {
 	public Nourriture() {
 		this.type = "";
 		this.qteEnergetique = 0;
-
+		this.coord = new CaseLoft();
 	}
 
 	public Nourriture(String type, int qteEnergetique, CaseLoft coord) {

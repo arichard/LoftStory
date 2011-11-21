@@ -25,8 +25,8 @@ public class Vorace extends Neuneu {
 	 */
 	public void seReproduire(Neuneu N) {
 		// Reproduction = consommation d'énergie pour les Neuneus
-		this.setEnergie(this.getEnergie() - 2);
-		N.setEnergie(N.getEnergie() - 2);
+		this.setEnergie(this.getEnergie() - 4);
+		N.setEnergie(N.getEnergie() - 4);
 		// Définition des attributs du bébé
 		int idBaby = 0;
 		int energieBaby = this.getEnergieDefaut();

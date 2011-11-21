@@ -79,14 +79,12 @@ public class CaseLoft {
 		presenceNourriture.add(N);
 		// on met à jour ses coordonnées
 		N.setCoord(this.getX(), this.getY());
-
 	}
 
 	public void retirerNourriture(Nourriture N) {
 		presenceNourriture.remove(N);
 		// on met à jour les coordonnées du Neuneu
 		N.setCoord(-1, -1);
-
 	}
 
 	public void ajouterNeuneu(Neuneu N) {
@@ -96,7 +94,6 @@ public class CaseLoft {
 		N.setPresenceLoft(true);
 		// on met à jour ses coordonnées
 		N.setCoord(this.getX(), this.getY());
-
 	}
 
 	public void retirerNeuneu(Neuneu N) {
@@ -104,7 +101,6 @@ public class CaseLoft {
 		N.setPresenceLoft(false);
 		// on met à jour les coordonnées du Neuneu
 		N.setCoord(-1, -1);
-
 	}
 
 	public LinkedList<CaseLoft> casesAdj() {

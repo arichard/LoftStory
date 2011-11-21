@@ -3,8 +3,9 @@ import java.util.Random;
 public abstract class Neuneu implements ObjetDessinable {
 
 	/**
-	 * Attributs génériques des Neuneus
+	 * Attributs
 	 */
+
 	protected int id, energie, energieDefaut;
 	protected boolean presenceLoft;
 	protected CaseLoft coord;
@@ -45,38 +46,27 @@ public abstract class Neuneu implements ObjetDessinable {
 		this.presenceLoft = presenceLoft;
 	}
 
-	/**
-	 * Pour récupérer les coordonnées du Neuneu
-	 */
 	public CaseLoft getCoord() {
 		return coord;
 	}
 
-	/**
-	 * Pour récupérer la position X du Neuneu
-	 */
 	public int getCoordX() {
 		return getCoord().getX();
 	}
 
-	/**
-	 * Pour récupérer la position Y du Neuneu
-	 */
 	public int getCoordY() {
 		return getCoord().getY();
 	}
 
-	/**
-	 * Pour modifier les coordonnées du Neuneu
-	 */
 	public void setCoord(int coordX, int coordY) {
 		this.coord.setX(coordX);
 		this.coord.setY(coordY);
 	}
 
 	/**
-	 * Constructeurs pour un nouveau Neuneu
+	 * Constructeurs
 	 */
+
 	protected Neuneu() {
 	}
 
@@ -90,16 +80,17 @@ public abstract class Neuneu implements ObjetDessinable {
 	}
 
 	/**
-	 * Pour l'action de déplacement aléatoire des Neuneus
+	 * Pour l'action de deplacement aleatoire des Neuneus
 	 */
 	protected void seDeplacer() {
-		// on choisit aléatoirement la case adjacente sur laquelle va aller le
+		// on choisit aleatoirement la case adjacente sur laquelle va aller le
 		// Neuneu
 		Random caseRandom = new Random();
-		int indiceCaseRandom = caseRandom.nextInt(this.getCoord().casesAdj().size());
-		// on va définir les nouvelles coordonnées du Neuneu
-		// en récupérant les coordonnées de la case choisie aléatoirement
-		this.setCoord(this.getCoord().casesAdj().get(indiceCaseRandom).getX(), 
+		int indiceCaseRandom = caseRandom.nextInt(this.getCoord().casesAdj()
+				.size());
+		// on va definir les nouvelles coordonnees du Neuneu
+		// en recuperant les coordonnees de la case choisie aleatoirement
+		this.setCoord(this.getCoord().casesAdj().get(indiceCaseRandom).getX(),
 				this.getCoord().casesAdj().get(indiceCaseRandom).getY());
 	}
 
@@ -107,33 +98,18 @@ public abstract class Neuneu implements ObjetDessinable {
 	 * Pour l'action de manger de la nourriture des Neuneus
 	 */
 	protected void manger(CaseLoft C) {
-		/*
-		// choix de la nourriture ayant la plus grande quantité énergétique
-		LinkedList<Integer> listeQteEnergetique = new LinkedList<Integer>();
-		for (Nourriture N : C.getPresenceNourriture()) {
-			listeQteEnergetique.add(N.getQteEnergetique());
-		}
-		Object obj = Collections.min(listeQteEnergetique);
-		Integer indiceQteEnergetiqueMax = (Integer) obj;
-
-		// on ajoute l'énergie de la nourriture choisie au Neuneu
-		int nouvelleEnergie = this.getEnergie()
-				+ C.getPresenceNourriture().get(indiceQteEnergetiqueMax)
-						.getQteEnergetique();
-		this.setEnergie(nouvelleEnergie);
-		// on enlève la nourriture mangée de la liste
-		C.getPresenceNourriture().remove(indiceQteEnergetiqueMax);
-		*/
+		// on ajoute l'energie de la nourriture
+		// a l'energie du Neuneu
 		int nouvelleEnergie = this.getEnergie()
 				+ C.getPresenceNourriture().get(0).getQteEnergetique();
 		this.setEnergie(nouvelleEnergie);
-		// on enlève la nourriture mangée de la liste
+		// on enleve la nourriture mangee de la liste
 		C.getPresenceNourriture().remove(0);
-		
+
 	}
 
 	/**
-	 * Pour savoir si un Neuneu a encore de l'énergie Donc s'il est encore
+	 * Pour savoir si un Neuneu a encore de l'energie donc s'il est encore
 	 * vivant !
 	 */
 	protected boolean energieSuffisante() {
@@ -145,13 +121,13 @@ public abstract class Neuneu implements ObjetDessinable {
 	}
 
 	/**
-	 * Méthode abstraite pour la reproduction Redéfinie pour chaque type de
-	 * Neuneu Pour créer un type de Neuneu adéquat en tant que bébé
+	 * Methode abstraite pour la reproduction redefinie pour chaque type de
+	 * Neuneu pour creer un type de Neuneu adequat en tant que bebe
 	 */
 	abstract void seReproduire(Neuneu N);
 
 	/**
-	 * Méthode abstraite pour le comportement Redéfinie pour chaque type de
+	 * Methode abstraite pour le comportement redefinie pour chaque type de
 	 * Neuneu
 	 */
 	abstract void seComporter();
