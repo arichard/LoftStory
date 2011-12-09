@@ -79,7 +79,7 @@ public class Saison1 {
 		// lancement des tours de jeu
 		for(int time=0; time<20; time++){
 			loft1.lancerTourDeJeu();
-			Thread.sleep(500);
+			Thread.sleep(2000);
 		};
 		
 		System.out.println("Fin de la saison 1 !");
